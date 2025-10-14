@@ -21,7 +21,7 @@ const GirlsProfiles = () => {
   const apiGirls = data?.data || [];
   
   // Transform API data to match component expectations
-  const transformedApiGirls = apiGirls.map((profile: any) => ({
+  const transformedApiGirls = Array.isArray(apiGirls) ? apiGirls.map((profile: any) => ({
     name: profile.name,
     age: profile.age,
     origin: profile.origin || "",
@@ -29,7 +29,7 @@ const GirlsProfiles = () => {
     specialties: profile.services || profile.massages || ["Erotik Massage", "Entspannung"],
     available: true, // Default to available
     description: profile.description || "Sinnliche und erfahrene Masseurin mit authentischen Techniken."
-  }));
+  })) : [];
   
   const girls = transformedApiGirls.length > 0 ? transformedApiGirls : staticGirls;
 

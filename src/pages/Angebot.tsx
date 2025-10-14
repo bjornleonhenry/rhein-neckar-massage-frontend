@@ -206,7 +206,7 @@ const Leistungen = () => {
     }
   };
 
-  const services = angebots.map(angebot => {
+  const services = Array.isArray(angebots) ? angebots.map(angebot => {
     // tolerate backend field naming differences (snake_case vs camelCase)
     const durationVal = (angebot as any).duration_minutes ?? (angebot as any).durationMinutes ?? null;
     const isActiveVal = (angebot as any).is_active ?? (angebot as any).isActive ?? false;
@@ -228,7 +228,7 @@ const Leistungen = () => {
       popular: isActiveVal,
       id: angebot.id
     };
-  });
+  }) : [];
 
   const additionalServices = [
     "Outcall Erotik-Service (Hotelbesuche)",

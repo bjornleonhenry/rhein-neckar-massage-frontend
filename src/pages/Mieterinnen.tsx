@@ -11,7 +11,7 @@ const Mieterinnen = () => {
   const apiGirls = data?.data || [];
   
   // Transform API data to match component expectations
-  const transformedApiGirls = apiGirls.map((profile: any) => ({
+  const transformedApiGirls = Array.isArray(apiGirls) ? apiGirls.map((profile: any) => ({
     id: profile.id,
     name: profile.name,
     age: profile.age,
@@ -23,7 +23,7 @@ const Mieterinnen = () => {
     languages: profile.languages || ["Deutsch", "Englisch"],
     workingHours: profile.schedule || "Mo-Fr: 14:00-22:00",
     rating: 4.8 // Default rating since it's not in profiles table
-  }));
+  })) : [];
   
   const girls = transformedApiGirls.length > 0 ? transformedApiGirls : staticGirls;
 

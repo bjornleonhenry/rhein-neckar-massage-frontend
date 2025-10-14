@@ -48,14 +48,14 @@ const Gaestebuch = () => {
         const data = await response.json();
 
         // Transform API data to match the expected format
-        const transformedEntries = data.data.map((entry: GuestbookEntry) => ({
+        const transformedEntries = Array.isArray(data.data) ? data.data.map((entry: GuestbookEntry) => ({
           name: entry.name || 'Anonymous',
           date: new Date(entry.date).toLocaleDateString('de-DE'),
           rating: entry.rating,
           service: entry.service,
           message: entry.message,
           verified: entry.verified
-        }));
+        })) : [];
 
         // Filter to only show verified entries
         const verifiedEntries = transformedEntries.filter((entry: any) => entry.verified === true || entry.verified === 1 || entry.verified === "1");
@@ -123,14 +123,14 @@ const Gaestebuch = () => {
   const refreshResponse = await fetch(API.gaestebuchs);
       if (refreshResponse.ok) {
         const refreshData = await refreshResponse.json();
-        const transformedEntries = refreshData.data.map((entry: GuestbookEntry) => ({
+        const transformedEntries = Array.isArray(refreshData.data) ? refreshData.data.map((entry: GuestbookEntry) => ({
           name: entry.name || 'Anonymous',
           date: new Date(entry.date).toLocaleDateString('de-DE'),
           rating: entry.rating,
           service: entry.service,
           message: entry.message,
           verified: entry.verified
-        }));
+        })) : [];
         // Filter to only show verified entries
         const verifiedEntries = transformedEntries.filter((entry: any) => entry.verified === true);
         setGuestbookEntries(verifiedEntries);

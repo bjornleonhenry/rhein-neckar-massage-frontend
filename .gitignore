@@ -27,3 +27,6 @@ dist-ssr
 
 # src/public/*
 ../temp.txt
+
+*.zip
+*.mp4

@@ -96,22 +96,41 @@ const Jobs = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Frontend validation
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.age || 
+        !formData.nationality.trim() || !formData.languages.trim() || !formData.email.trim() || 
+        !formData.phone.trim() || !formData.motivation.trim()) {
+      setSubmitError('Bitte füllen Sie alle erforderlichen Felder aus.');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError('');
     setSubmitSuccess(false);
 
     try {
       const apiBase = import.meta.env.VITE_API_BASE;
+      
+      // Convert age to number and prepare data
+      const submitData = {
+        ...formData,
+        age: parseInt(formData.age, 10),
+      };
+
+      console.log('Submitting job application:', submitData); // Debug log
+      
       const response = await fetch(`${apiBase}/job-applications`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       const result = await response.json();
+      console.log('Response:', response.status, result); // Debug log
 
       if (response.ok) {
         setSubmitSuccess(true);
@@ -131,7 +150,13 @@ const Jobs = () => {
           references: ''
         });
       } else {
-        setSubmitError(result.message || 'Fehler beim Senden der Bewerbung. Bitte versuchen Sie es später erneut.');
+        // Show validation errors
+        if (result.errors) {
+          const errorMessages = Object.values(result.errors).flat().join(', ');
+          setSubmitError(`Validierungsfehler: ${errorMessages}`);
+        } else {
+          setSubmitError(result.message || 'Fehler beim Senden der Bewerbung. Bitte versuchen Sie es später erneut.');
+        }
       }
     } catch (error) {
       console.error('Error submitting form:', error);

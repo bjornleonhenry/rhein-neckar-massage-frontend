@@ -1,0 +1,59 @@
+{
+  "amenities": [
+    { "id": 1, "icon": "shield", "title": "Absolute Diskretion", "description": "Separate Eingänge und höchste Privatsphäre" },
+    { "id": 2, "icon": "sparkles", "title": "Luxuriöse Ausstattung", "description": "Hochwertige Materialien und edle Einrichtung" },
+    { "id": 3, "icon": "heart", "title": "Romantische Atmosphäre", "description": "Stimmungsvolle Beleuchtung und Dekoration" },
+    { "id": 4, "icon": "star", "title": "Premium Service", "description": "Erstklassiger Service und Aufmerksamkeit" }
+  ],
+
+  "Mieterinnen": [
+  { "id": 3, "name": "Lila", "age": 24, "description": "Verführerische Göttin mit sinnlichen thailändischen Techniken. Lila lässt Ihre wildesten Fantasien wahr werden.", "image": "images/users/1.webp?auto=compress&cs=tinysrgb&w=600", "specialties": ["Tantra","Erotische Massage","Verführung","Sinnliche Entspannung"], "languages": ["Deutsch","Englisch","Thai"], "workingHours": "Mo-Fr: 14:00-22:00", "rating": 4.9 },
+  { "id": 4, "name": "Maya", "age": 26, "description": "Elegante Verführerin für anspruchsvolle Gentlemen.", "image": "images/users/7.webp?auto=compress&cs=tinysrgb&w=600", "specialties": ["Erotik Massage","Öl Massage","VIP Service","Paar Massage"], "languages": ["Deutsch","Englisch","Thai"], "workingHours": "Di-Sa: 16:00-24:00", "rating": 5.0 },
+  { "id": 5, "name": "Nira", "age": 23, "description": "Spezialistin für leidenschaftliche Paarbehandlungen und romantische Erotik-Erlebnisse.", "image": "images/users/9.webp?auto=compress&cs=tinysrgb&w=600", "specialties": ["Paar Massage","Erotische Wellness","Verführung","Sinnliches Vergnügen"], "languages": ["Deutsch","Thai"], "workingHours": "Mo-Do: 15:00-23:00", "rating": 4.8 },
+  { "id": 6, "name": "Kira", "age": 25, "description": "Mystische Verführerin die traditionelle Massage mit erotischen Tantra-Praktiken verbindet.", "image": "images/users/5.webp?auto=compress&cs=tinysrgb&w=600", "specialties": ["Tantra","Erotische Meditation","Sinnliche Energie","Verführung"], "languages": ["Deutsch","Englisch","Thai"], "workingHours": "Mi-So: 13:00-21:00", "rating": 4.9 },
+  { "id": 7, "name": "Siri", "age": 27, "description": "Expertin für sinnliche Massagen und erotische Wellness-Behandlungen.", "image": "images/users/8.webp?auto=compress&cs=tinysrgb&w=600", "specialties": ["Hot Stone","Erotische Massage","Sinnliche Berührungen","Verführung"], "languages": ["Deutsch","Englisch"], "workingHours": "Mo-Fr: 12:00-20:00", "rating": 4.7 },
+  { "id": 8, "name": "Ploy", "age": 22, "description": "Jung und leidenschaftlich mit einer natürlichen Begierde nach sinnlichen Abenteuern.", "image": "images/users/2.webp?auto=compress&cs=tinysrgb&w=600", "specialties": ["Erotik Massage","Sinnliche Körperbehandlung","Intimität","Verführung"], "languages": ["Deutsch","Thai"], "workingHours": "Do-Mo: 18:00-02:00", "rating": 4.8 }
+  ],
+
+  "Ambiente": [
+    { "id": 1, "name": "VIP Suite", "image": "images/rooms/6.webp", "description": "Luxuriöse Suite mit Whirlpool und Kamin.", "features": ["Whirlpool","Kamin","Minibar"], "size": "45m²", "capacity": "1-2 Personen" },
+    { "id": 2, "name": "Tantra Raum", "image": "images/rooms/7.webp", "description": "Warme, meditative Atmosphäre für Tantra-Behandlungen.", "features": ["Meditation Ecke","Aromatherapie"], "size": "30m²", "capacity": "1-2 Personen" }
+  ],
+
+  "GirlsProfiles": [
+    { "id": 1, "name": "Sophie", "age": 26, "tagline": "Sinnliche Verwöhnung", "description": "Sophie bietet eine sanfte und persönliche Massageerfahrung.", "images": ["images/girls/sophie1.jpg","images/girls/sophie2.jpg"] },
+    { "id": 2, "name": "Mia", "age": 29, "tagline": "Verführerische Eleganz", "description": "Mia kombiniert Professionalität mit Charme.", "images": ["images/girls/mia1.jpg"] }
+  ],
+
+  "guestbookEntries": [
+    { "id": 1, "name": "Max", "message": "Großartige Atmosphäre, sehr diskret.", "rating": 5, "date": "2025-08-01" },
+    { "id": 2, "name": "Stefan", "message": "Professioneller Service und entspannend.", "rating": 5, "date": "2025-07-20" }
+  ]
+  ,
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Michael K.",
+      "location": "Heidenburg",
+      "text": "Unvergessliches erotisches Abenteuer! Die sinnliche Atmosphäre hat mich sofort in ihren Bann gezogen.",
+      "rating": 5,
+      "image": "assets/test3.jpg?auto=compress&cs=tinysrgb&w=150"
+    },
+    {
+      "id": 2,
+      "name": "Stefan W.",
+      "location": "Heidenburg",
+      "text": "Maya ist eine wahre Meisterin der sinnlichen Kunst! Ihr leidenschaftliches Verständnis hat mich in eine Welt der puren Lust entführt.",
+      "rating": 5,
+      "image": "assets/test4.jpg?auto=compress&cs=tinysrgb&w=150"
+    },
+    {
+      "id": 3,
+      "name": "Alexander N.",
+      "location": "Heidenburg",
+      "text": "Das VIP Lust-Erlebnis mit zwei Göttinnen war überwältigend! Absolut süchtig machend!",
+      "rating": 5,
+      "image": "assets/test5.jpg?auto=compress&cs=tinysrgb&w=150"
+    }
+  ]
+}

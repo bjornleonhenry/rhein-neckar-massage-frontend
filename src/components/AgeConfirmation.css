@@ -1,0 +1,21 @@
+/* Modal fade-in animation */
+.age-modal-fadein {
+  animation: fadeInModal 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 18+ icon bounce animation */
+.age-icon-bounce {
+  animation: bounce18plus 1.2s cubic-bezier(0.68,-0.55,0.27,1.55);
+}
+
+@keyframes bounce18plus {
+  0%   { transform: scale(0.7) translateY(-40px); opacity: 0; }
+  60%  { transform: scale(1.15) translateY(10px); opacity: 1; }
+  80%  { transform: scale(0.95) translateY(-5px); }
+  100% { transform: scale(1) translateY(0); }
+}

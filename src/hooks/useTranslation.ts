@@ -44,10 +44,25 @@ export const useTranslation = () => {
     const savedLanguage = localStorage.getItem('language') as 'de' | 'en' || 'de';
     setCurrentLanguage(savedLanguage);
 
-    // Fetch custom translations from API
-        const fetchTranslations = async () => {
+    // Helper to resolve API base at runtime. Prefer Vite build-time env, then window global, then origin/api
+    const getApiBase = () => {
       try {
-        const apiBase = import.meta.env.VITE_API_BASE;
+        const buildTime = (import.meta as any).env?.VITE_API_BASE as string | undefined;
+        if (buildTime && buildTime !== 'undefined') return buildTime.replace(/\/$/, '');
+      } catch (e) {
+        // ignore
+      }
+      // Allow injecting at runtime via a global (useful for deployments where build-time env isn't available)
+      const runtime = (window as any).__API_BASE || (window as any).__RUNTIME_CONFIG?.VITE_API_BASE;
+      if (runtime) return String(runtime).replace(/\/$/, '');
+      // Fallback to same-origin /api
+      return `${window.location.origin.replace(/\/$/, '')}/api`;
+    };
+
+    // Fetch custom translations from API
+    const fetchTranslations = async () => {
+      const apiBase = getApiBase();
+      try {
         const response = await fetch(`${apiBase}/language-strings?lang=${savedLanguage}&t=${Date.now()}`);
         if (response.ok) {
           const payload = await response.json();

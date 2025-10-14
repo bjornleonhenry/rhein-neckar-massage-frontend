@@ -29,6 +29,3 @@ dist-ssr
 ../temp.txt
 
 *.zip
-*.mp4
-
-public/video/*

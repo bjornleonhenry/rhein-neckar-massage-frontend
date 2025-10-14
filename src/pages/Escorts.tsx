@@ -146,7 +146,7 @@ const Escorts = () => {
                     </div>
                     <div className="flex items-center">
                       <span className="w-4 h-4 mr-2 text-rose-400">🗣️</span>
-                      <span>{escort.languages.join(', ')}</span>
+                      <span>{Array.isArray(escort.languages) ? escort.languages.join(', ') : (escort.languages || 'Deutsch, Englisch')}</span>
                     </div>
                   </div>
 

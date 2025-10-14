@@ -191,7 +191,7 @@ const Buchen = () => {
                         <option value="">Bitte wählen</option>
                         {girls.filter(girl => girl.available).map((girl, idx) => (
                           <option key={idx} value={girl.name}>
-                            {girl.name} - {girl.specialties.join(', ')}
+                            {girl.name} - {Array.isArray(girl.specialties) ? girl.specialties.join(', ') : (girl.specialties || 'Massage')}
                           </option>
                         ))}
                       </select>

@@ -45,7 +45,7 @@ const Kontakt = () => {
 
     try {
       const apiBase = import.meta.env.VITE_API_BASE;
-      const response = await fetch(`${apiBase}/api/messages`, {
+      const response = await fetch(`${apiBase}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -120,7 +120,7 @@ const ProfileView = () => {
                 {girl.languages && girl.languages.length > 0 && (
                   <div className="flex items-center text-gray-300">
                     <span className="w-5 h-5 mr-3 text-rose-400 text-center">🗣️</span>
-                    <span>{girl.languages.join(', ')}</span>
+                    <span>{Array.isArray(girl.languages) ? girl.languages.join(', ') : (girl.languages || 'Deutsch, Englisch')}</span>
                   </div>
                 )}
               </div>

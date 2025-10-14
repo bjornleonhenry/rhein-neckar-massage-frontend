@@ -174,7 +174,7 @@ const GirlForm = ({ girl, onSave }: GirlFormProps) => {
       </div>
       <div>
         <Label htmlFor="specialties">Specialties (comma-separated)</Label>
-        <Input id="specialties" value={formData.specialties.join(', ')} onChange={(e) => setFormData({ ...formData, specialties: e.target.value.split(', ') })} />
+        <Input id="specialties" value={Array.isArray(formData.specialties) ? formData.specialties.join(', ') : (formData.specialties || '')} onChange={(e) => setFormData({ ...formData, specialties: e.target.value.split(', ') })} />
       </div>
       <div>
         <Label htmlFor="description">Description</Label>

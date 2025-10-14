@@ -26,7 +26,10 @@ const Admin = () => {
 
   // Update local state when data loads
   useEffect(() => {
-    if (girlsData) setGirls(girlsData);
+    if (girlsData) {
+      const girlsArray = Array.isArray(girlsData) ? girlsData : (girlsData as any)?.data || [];
+      setGirls(girlsArray);
+    }
   }, [girlsData]);
 
   const handleSave = async (girl: Girl) => {

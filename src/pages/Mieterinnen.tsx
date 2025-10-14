@@ -97,7 +97,7 @@ const Mieterinnen = () => {
                    <div className="mb-4">
                      <h4 className="text-white font-semibold mb-2">{t('mieterinnen.specialties.title')}</h4>
                     <div className="flex flex-wrap gap-2">
-                        {(girl.specialties || []).map((specialty: string, idx: number) => (
+                        {(Array.isArray(girl.specialties) ? girl.specialties : []).map((specialty: string, idx: number) => (
                           <span 
                             key={idx}
                             className="px-3 py-1 bg-rose-900/30 text-rose-300 text-xs rounded-full"
@@ -115,7 +115,7 @@ const Mieterinnen = () => {
                      </div>
                      <div className="flex items-center">
                        <span className="w-4 h-4 mr-2 text-rose-400">🗣️</span>
-                       <span>{t('mieterinnen.languages.title')} {(girl.languages || []).join(', ')}</span>
+                       <span>{t('mieterinnen.languages.title')} {Array.isArray(girl.languages) ? girl.languages.join(', ') : (girl.languages || 'Deutsch, Englisch')}</span>
                      </div>
                   </div>
                   

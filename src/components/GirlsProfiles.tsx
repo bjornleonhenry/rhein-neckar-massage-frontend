@@ -153,7 +153,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
               <div
                   className="flex flex-wrap gap-2 mb-4 flex-1 max-h-16 overflow-hidden items-start"
                 >
-                  {(girl.specialties ?? []).map((specialty: string, idx: number) => (
+                  {(Array.isArray(girl.specialties) ? girl.specialties : []).map((specialty: string, idx: number) => (
                     <span
                       key={idx}
                       className="px-2 py-1 bg-rose-900/30 text-rose-300 text-xs rounded-full cursor-pointer transition-all duration-300"

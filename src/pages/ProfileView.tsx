@@ -294,7 +294,7 @@ const ProfileView = () => {
                   <div>
                     <h3 className="text-sm font-semibold text-rose-300 mb-2">Spezialitäten</h3>
                     <div className="flex flex-wrap gap-2">
-                      {girl.specialties.map((specialty: string, idx: number) => (
+                      {(Array.isArray(girl.specialties) ? girl.specialties : []).map((specialty: string, idx: number) => (
                         <span
                           key={idx}
                           className="px-3 py-1 bg-rose-900/30 text-rose-300 text-xs rounded-full border border-rose-700/30"

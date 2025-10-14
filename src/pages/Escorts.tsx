@@ -128,7 +128,7 @@ const Escorts = () => {
                   <div className="mb-4">
                     <h4 className="text-white font-semibold mb-2">Spezialitäten:</h4>
                     <div className="flex flex-wrap gap-2">
-                      {escort.specialties.map((specialty, idx) => (
+                      {(Array.isArray(escort.specialties) ? escort.specialties : []).map((specialty, idx) => (
                         <span
                           key={idx}
                           className="px-3 py-1 bg-rose-900/30 text-rose-300 text-xs rounded-full"

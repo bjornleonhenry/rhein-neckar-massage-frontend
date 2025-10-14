@@ -87,7 +87,7 @@ const Services = () => {
         
         <ScrollReveal delay={1}>
           <div className="mt-12 flex justify-center">
-            <Link to="/leistungen" className="w-full md:w-1/2 lg:w-1/4">
+            <Link to="/angebot" className="w-full md:w-1/2 lg:w-1/4">
               <ButtonHover className="w-full px-8 py-4 rounded-lg">
                 {t('services.button.discover')}
               </ButtonHover>

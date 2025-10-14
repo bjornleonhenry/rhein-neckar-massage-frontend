@@ -9,6 +9,7 @@ import { ButtonHover } from '../components/ui/button-hover';
 import { Floating } from '../components/ui/floating';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Link } from 'react-router-dom';
 
 // API base URL is read from Vite env: VITE_API_BASE
 // Falls back to local development URL when not provided.
@@ -567,9 +568,11 @@ const Leistungen = () => {
                         viewport={{ once: true }}
                         className="mt-4"
                       >
+                          <Link to="/buchen" className="w-full md:w-1/2 lg:w-1/4">
                         <ButtonHover className="w-full py-2 rounded-lg text-sm">
                           Jetzt buchen
                         </ButtonHover>
+                        </Link>
                       </motion.div>
                     </motion.div>
                   </Magnetic>

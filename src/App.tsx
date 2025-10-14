@@ -37,7 +37,7 @@ function AppContent() {
           <Route path="/escorts" element={<Escorts />} />
           <Route path="/ambiente" element={<Ambiente />} />
           <Route path="/angebot" element={<Angebot />} />
-          <Route path="/leistungen" element={<Leistungen />} />
+          <Route path="/angebot" element={<Leistungen />} />
           <Route path="/gaestebuch" element={<Gaestebuch />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/jobs" element={<Jobs />} />

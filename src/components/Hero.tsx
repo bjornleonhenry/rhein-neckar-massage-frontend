@@ -57,7 +57,7 @@ const Hero = () => {
                   </ButtonHover>
                 </Link>
               )}
-              <Link to="/leistungen">
+              <Link to="/angebot">
                 <ButtonHover variant="secondary" className="px-8 py-4 rounded-lg">
                   {withDefault('hero.cta.services', 'Erotik-Services entdecken')}
                 </ButtonHover>

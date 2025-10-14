@@ -102,7 +102,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
   const apiGirls = data?.data || [];
   
   // Transform API data to match component expectations
-  const transformedApiGirls: Girl[] = apiGirls.map((profile: any) => ({
+  const transformedApiGirls: Girl[] = Array.isArray(apiGirls) ? apiGirls.map((profile: any) => ({
     name: profile.name,
     age: profile.age,
     origin: profile.origin || "Heidelberg, Deutschland",
@@ -110,7 +110,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
     specialties: profile.services || profile.massages || ["Erotische Massage", "Verführung"],
     available: true, // Default to available
     description: profile.description || "Verführerische Göttin mit sinnlichen Techniken für ultimatives Lustempfinden."
-  }));
+  })) : [];
   
   const girls = transformedApiGirls.length > 0 ? transformedApiGirls : staticGirls;
 

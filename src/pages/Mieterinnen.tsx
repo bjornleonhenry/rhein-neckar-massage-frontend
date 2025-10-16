@@ -77,7 +77,7 @@ const Mieterinnen = () => {
                   <img
                     src={girl.image}
                     alt=""
-                    className="w-full h-80 object-cover"
+                    className="w-full h-100 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                   {/* Removed Verfügbar/Beschäftigt badge */}

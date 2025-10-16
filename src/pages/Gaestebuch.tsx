@@ -63,14 +63,15 @@ const Gaestebuch = () => {
         setGuestbookEntries(verifiedEntries);
       } catch (error) {
         console.error('Error loading guestbook entries:', error);
-        setApiError(t('gaestebuch.error.load'));
+        setApiError('Error loading guestbook');
       } finally {
         setApiLoading(false);
       }
     };
 
     loadEntries();
-  }, [t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
 
   const services = [
     t('gaestebuch.services.erotik_massage'),

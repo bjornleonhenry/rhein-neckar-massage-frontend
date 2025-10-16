@@ -110,7 +110,7 @@ const Hero = () => {
                   <img src="assets/test2.jpg?auto=compress&cs=tinysrgb&w=100" alt="Zufriedener Kunde" className="w-10 h-10 rounded-full border-2 border-rose-400" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-white">Erotische Kundenerfahrungen</div>
+                  <div className="text-sm font-semibold text-white">{withDefault('hero.testimonials.title', 'Erotische Kundenerfahrungen')}</div>
                   <div className="flex items-center">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />

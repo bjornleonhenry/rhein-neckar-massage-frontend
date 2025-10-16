@@ -171,7 +171,7 @@ const Leistungen = () => {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Sind Sie sicher, dass Sie dieses Angebot löschen möchten?')) {
+    if (!confirm(t('angebot.delete.confirm'))) {
       return;
     }
 
@@ -223,7 +223,7 @@ const Leistungen = () => {
       icon: getIcon(angebot.category ?? ''),
       title: angebot.title,
       description: angebot.description,
-      duration: durationVal !== null && durationVal !== undefined ? `${durationVal} Min` : '',
+      duration: durationVal !== null && durationVal !== undefined ? `${durationVal} ${t('angebot.duration')}` : '',
       price: `${angebot.price}€`,
       features: featuresVal,
       popular: isActiveVal,
@@ -232,12 +232,12 @@ const Leistungen = () => {
   }) : [];
 
   const additionalServices = [
-    "Outcall Erotik-Service (Hotelbesuche)",
-    "Overnight Lust-Begleitung",
-    "Verführerische Dinner Dates",
-    "Erotische Wellness Packages",
-    "Lust-Geschenkgutscheine",
-    "Diskrete Firmen-Events mit Erotik"
+    t('angebot.additional_services.1'),
+    t('angebot.additional_services.2'),
+    t('angebot.additional_services.3'),
+    t('angebot.additional_services.4'),
+    t('angebot.additional_services.5'),
+    t('angebot.additional_services.6')
   ];
 
   return (
@@ -275,9 +275,7 @@ const Leistungen = () => {
                 viewport={{ once: true }}
                 className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
               >
-                Tauchen Sie ein in unsere Welt der sinnlichen Verführung und erotischen Lust.
-                Entdecken Sie unser vielfältiges Angebot an leidenschaftlichen Massagen und exklusiven Erotik-Services.
-                Jede Behandlung wird individuell auf Ihre verborgensten Wünsche und Sehnsüchte abgestimmt.
+                {t('angebot.description')}
               </motion.p>
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
@@ -288,7 +286,7 @@ const Leistungen = () => {
                 className={`hidden mt-6 bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors ${showForm ? 'hidden' : ''}`}
               >
                 <Plus className="w-5 h-5 inline mr-2" />
-                Neues Angebot hinzufügen
+                {t('angebot.button.add_new')}
               </motion.button>
             </div>
           </ScrollReveal>
@@ -302,11 +300,11 @@ const Leistungen = () => {
                 transition={{ duration: 0.4 }}
                 className="bg-gray-800 border border-rose-900/30 rounded-xl p-8 mb-8"
               >
-                <h3 className="text-2xl font-bold text-white mb-6">{editingAngebot ? 'Angebot bearbeiten' : 'Neues Angebot erstellen'}</h3>
+                <h3 className="text-2xl font-bold text-white mb-6">{editingAngebot ? t('angebot.edit.title') : t('angebot.create.title')}</h3>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-white mb-2">Titel</label>
+                      <label className="block text-white mb-2">{t('angebot.form.title')}</label>
                       <input
                         type="text"
                         value={newAngebot.title}
@@ -316,7 +314,7 @@ const Leistungen = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-white mb-2">Kategorie</label>
+                      <label className="block text-white mb-2">{t('angebot.form.category')}</label>
                       <input
                         type="text"
                         value={newAngebot.category}
@@ -327,7 +325,7 @@ const Leistungen = () => {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-white mb-2">Beschreibung</label>
+                    <label className="block text-white mb-2">{t('angebot.form.description')}</label>
                     <textarea
                       value={newAngebot.description}
                       onChange={(e) => setNewAngebot(prev => ({ ...prev, description: e.target.value }))}
@@ -338,7 +336,7 @@ const Leistungen = () => {
                   </div>
                   <div className="grid md:grid-cols-3 gap-6">
                     <div>
-                      <label className="block text-white mb-2">Preis (€)</label>
+                      <label className="block text-white mb-2">{t('angebot.form.price')}</label>
                       <input
                         type="number"
                         step="0.01"
@@ -349,7 +347,7 @@ const Leistungen = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-white mb-2">Dauer (Minuten)</label>
+                      <label className="block text-white mb-2">{t('angebot.form.duration')}</label>
                       <input
                         type="number"
                         value={newAngebot.duration_minutes}
@@ -359,7 +357,7 @@ const Leistungen = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-white mb-2">Bild URL (optional)</label>
+                      <label className="block text-white mb-2">{t('angebot.form.image')}</label>
                       <input
                         type="text"
                         value={newAngebot.image}
@@ -376,13 +374,13 @@ const Leistungen = () => {
                       onChange={(e) => setNewAngebot(prev => ({ ...prev, is_active: e.target.checked }))}
                       className="mr-2"
                     />
-                    <label htmlFor="is_active" className="text-white">Aktiv</label>
+                    <label htmlFor="is_active" className="text-white">{t('angebot.form.active')}</label>
                   </div>
                   {submitError && (
                     <div className="text-red-400 text-sm">{submitError}</div>
                   )}
                   {submitSuccess && (
-                    <div className="text-green-400 text-sm">Angebot erfolgreich gespeichert!</div>
+                    <div className="text-green-400 text-sm">{t('angebot.success.save')}</div>
                   )}
                   <div className="flex gap-4">
                     <button
@@ -390,14 +388,14 @@ const Leistungen = () => {
                       disabled={isSubmitting}
                       className="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2 rounded-lg text-sm disabled:opacity-50 transition-colors"
                     >
-                      {isSubmitting ? 'Speichere...' : 'Speichern'}
+                      {isSubmitting ? t('angebot.loading.save') : t('button.save')}
                     </button>
                     <button
                       type="button"
                       onClick={handleCancelEdit}
                       className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg text-sm transition-colors"
                     >
-                      Abbrechen
+                      {t('button.cancel')}
                     </button>
                   </div>
                 </form>
@@ -478,7 +476,7 @@ const Leistungen = () => {
                         whileInView={{ scale: 1 }}
                         transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="hidden bg-rose-900/20 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:bg-rose-800/30 transition-colors"
+                        className="bg-rose-900/20 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:bg-rose-800/30 transition-colors"
                       >
                         <motion.div
                           whileHover={{ rotate: 360, scale: 1.2 }}
@@ -517,7 +515,7 @@ const Leistungen = () => {
                         viewport={{ once: true }}
                         className="mb-4 flex-1"
                       >
-                        <h4 className="text-white font-semibold mb-2 text-sm">Inkludiert:</h4>
+                        <h4 className="text-white font-semibold mb-2 text-sm">{t('angebot.form.services')}</h4>
                         <div className="space-y-1">
                           {Array.isArray(service.features) && service.features.map((feature, idx) => (
                             <motion.div
@@ -570,7 +568,7 @@ const Leistungen = () => {
                       >
                           <Link to="/buchen" className="w-full md:w-1/2 lg:w-1/4">
                         <ButtonHover className="w-full py-2 rounded-lg text-sm">
-                          Jetzt buchen
+                          {t('angebot.book_now')}
                         </ButtonHover>
                         </Link>
                       </motion.div>
@@ -584,7 +582,7 @@ const Leistungen = () => {
           {/* No services message */}
           {!apiError && services.length === 0 && (
             <div className="text-center text-gray-300 mb-16">
-              <p>Keine Angebote verfügbar. Fügen Sie ein neues Angebot hinzu.</p>
+              <p>{t('angebot.no_services')}</p>
             </div>
           )}
 

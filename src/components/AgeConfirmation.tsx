@@ -2,9 +2,11 @@ import React from 'react';
 
 import { motion } from 'motion/react';
 import { Floating } from './ui/floating';
+import { useTranslation } from '@/hooks/useTranslation';
 
 
 const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
+  const { t } = useTranslation();
   const handleConfirm = () => {
     onConfirm();
     localStorage.setItem('ageConfirmed', 'true');
@@ -77,12 +79,12 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
               />
             </Floating>
           </div>
-        <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Age Verification</h1>
+        <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{t('age.title')}</h1>
         <p style={{ marginBottom: '0.2rem' }}>
-          This website contains adult content.
+          {t('age.description1')}
         </p>
         <p style={{ marginBottom: '2.5rem' }}>
-          You must be 18 years or older to enter.
+          {t('age.description2')}
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
           <button
@@ -97,7 +99,7 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
             }}
             onClick={handleReturn}
           >
-            Return
+            {t('age.return')}
           </button>
           <button
             style={{
@@ -111,7 +113,7 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
             }}
             onClick={handleConfirm}
           >
-            I am 18 or older
+            {t('age.confirm')}
           </button>
         </div>
   </motion.div>

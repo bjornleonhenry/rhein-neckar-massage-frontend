@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Sparkles, Shield, Heart, Star } from 'lucide-react';
 import { useFetch, API } from '../lib/useFetch';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface Ambient {
   id: number;
@@ -10,8 +11,8 @@ interface Ambient {
   location: string;
   capacity: number;
   size?: string;
-  features: string[];
-  amenities: string[];
+  features: string[] | string;
+  amenities: string[] | string;
   image?: string;
   rating: number;
   is_active: boolean;
@@ -19,16 +20,37 @@ interface Ambient {
   updated_at: string;
 }
 
+// Helper function to parse features into an array
+const parseFeatures = (features: string[] | string): string[] => {
+  if (Array.isArray(features)) {
+    return features;
+  }
+  if (typeof features === 'string') {
+    try {
+      // Try parsing as JSON first
+      if (features.startsWith('[')) {
+        return JSON.parse(features);
+      }
+      // Otherwise split by comma
+      return features.split(',').map((f: string) => f.trim()).filter((f: string) => f);
+    } catch {
+      return [];
+    }
+  }
+  return [];
+};
+
 const Ambiente = () => {
   const { data, loading, error } = useFetch<{ data: Ambient[] }>(API.ambients);
+  const { t } = useTranslation();
 
   const rooms = data?.data || [];
 
   const amenities = [
-    { icon: <Shield className="w-6 h-6" />, title: "Absolute Diskretion", description: "Separate Eingänge und höchste Privatsphäre" },
-    { icon: <Sparkles className="w-6 h-6" />, title: "Luxuriöse Ausstattung", description: "Hochwertige Materialien und edle Einrichtung" },
-    { icon: <Heart className="w-6 h-6" />, title: "Romantische Atmosphäre", description: "Stimmungsvolle Beleuchtung und Dekoration" },
-    { icon: <Star className="w-6 h-6" />, title: "Premium Service", description: "Erstklassiger Service und Aufmerksamkeit" }
+    { icon: <Shield className="w-6 h-6" />, title: t('ambiente.amenities.discretion.title'), description: t('ambiente.amenities.discretion.description') },
+    { icon: <Sparkles className="w-6 h-6" />, title: t('ambiente.amenities.equipment.title'), description: t('ambiente.amenities.equipment.description') },
+    { icon: <Heart className="w-6 h-6" />, title: t('ambiente.amenities.atmosphere.title'), description: t('ambiente.amenities.atmosphere.description') },
+    { icon: <Star className="w-6 h-6" />, title: t('ambiente.amenities.service.title'), description: t('ambiente.amenities.service.description') }
   ];
 
   if (loading) {
@@ -38,7 +60,7 @@ const Ambiente = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-400 mx-auto"></div>
-              <p className="text-gray-300 mt-4"></p>
+              <p className="text-gray-300 mt-4"> </p>
             </div>
           </div>
         </section>
@@ -52,7 +74,7 @@ const Ambiente = () => {
         <section className="w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <p className="text-red-400">Fehler beim Laden der Daten: {error.message}</p>
+              <p className="text-red-400">{t('ambiente.error.load')} {error.message}</p>
             </div>
           </div>
         </section>
@@ -65,10 +87,9 @@ const Ambiente = () => {
       <section className="py-20 bg-gradient-to-br from-gray-900 via-purple-900/20 to-rose-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 px-4 sm:px-6 md:px-0 text-sm hidden md:block">
-            <h1 className="text-5xl font-bold text-white mb-6">Unser Ambiente</h1>
+            <h1 className="text-5xl font-bold text-white mb-6">{t('ambiente.title')}</h1>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Entdecken Sie unsere exklusiv gestalteten Räume, die eine perfekte Atmosphäre für 
-              Entspannung, Sinnlichkeit und unvergessliche Momente schaffen.
+              {t('ambiente.description')}
             </p>
           </div>
 
@@ -103,7 +124,7 @@ const Ambiente = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                   <div className="absolute bottom-4 left-4">
                     <h3 className="text-xl font-bold text-white">{room.name}</h3>
-                    <p className="text-rose-300 text-sm">{room.size || 'N/A'} • {room.capacity} {room.capacity === 1 ? 'Person' : 'Personen'}</p>
+                    <p className="text-rose-300 text-sm">{room.size || 'N/A'} • {room.capacity} {room.capacity === 1 ? t('ambiente.capacity.person') : t('ambiente.capacity.persons')}</p>
                   </div>
                 </div>
                 
@@ -111,9 +132,9 @@ const Ambiente = () => {
                   <p className="text-gray-300 mb-4 leading-relaxed">{room.description}</p>
                   
                   <div className="mb-4 flex-1">
-                    <h4 className="text-white font-semibold mb-2">Ausstattung:</h4>
+                    <h4 className="text-white font-semibold mb-2">{t('ambiente.equipment.title')}</h4>
                     <div className="space-y-1">
-                      {room.features.map((feature, idx) => (
+                      {parseFeatures(room.features).map((feature: string, idx: number) => (
                         <div key={idx} className="flex items-center text-sm text-gray-300">
                           <div className="w-2 h-2 bg-rose-400 rounded-full mr-2"></div>
                           {feature}
@@ -126,7 +147,7 @@ const Ambiente = () => {
                     to="/buchen" 
                     className="w-full bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors text-center block mt-auto"
                   >
-                    Raum reservieren
+                    {t('ambiente.reserve_room')}
                   </Link>
                 </div>
               </div>
@@ -135,24 +156,22 @@ const Ambiente = () => {
           
           <div className="text-center mt-16">
             <div className="bg-gray-800 border border-rose-900/30 rounded-xl p-8 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-white mb-4">Besondere Atmosphäre</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">{t('ambiente.special_atmosphere.title')}</h3>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Jeder unserer Räume wurde sorgfältig gestaltet, um eine einzigartige Atmosphäre zu schaffen. 
-                Von der luxuriösen VIP Suite bis zum traditionellen Thai Raum - wir bieten das perfekte 
-                Ambiente für jeden Geschmack und jede Art von Entspannung.
+                {t('ambiente.special_atmosphere.description')}
               </p>
               <div className="grid md:grid-cols-3 gap-4 text-center">
                 <div>
                   <div className="text-2xl font-bold text-rose-400">{rooms.length}</div>
-                  <div className="text-gray-300 text-sm">Exklusive Räume</div>
+                  <div className="text-gray-300 text-sm">{t('ambiente.stats.rooms')}</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-rose-400">100%</div>
-                  <div className="text-gray-300 text-sm">Diskrete Atmosphäre</div>
+                  <div className="text-gray-300 text-sm">{t('ambiente.stats.discretion')}</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-rose-400">24/7</div>
-                  <div className="text-gray-300 text-sm">Verfügbarkeit</div>
+                  <div className="text-gray-300 text-sm">{t('ambiente.stats.availability')}</div>
                 </div>
               </div>
             </div>

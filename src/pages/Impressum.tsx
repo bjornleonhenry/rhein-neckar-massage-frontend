@@ -1,95 +1,90 @@
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 const Impressum = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-gray-800 rounded-lg shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-white mb-8">Impressum</h1>
+          <h1 className="text-4xl font-bold text-white mb-8">{t('impressum.title')}</h1>
           
           <div className="prose prose-invert max-w-none">
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Angaben gemäß § 5 TMG</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section1.title')}</h2>
               <div className="text-gray-300 space-y-2">
-                <p><strong>Betreiber der Website:</strong></p>
-                <p>Max Mustermann</p>
-                <p>Musterstraße 123</p>
-                <p>12345 Musterstadt</p>
-                <p>Deutschland</p>
+                <p><strong>{t('impressum.section1.operator')}:</strong></p>
+                <p>{t('impressum.section1.name')}</p>
+                <p>{t('impressum.section1.street')}</p>
+                <p>{t('impressum.section1.city')}</p>
+                <p>{t('impressum.section1.country')}</p>
               </div>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Kontakt</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section2.title')}</h2>
               <div className="text-gray-300 space-y-2">
-                <p><strong>Telefon:</strong> +49 (0) 123 456789</p>
-                <p><strong>E-Mail:</strong> info@example.com</p>
-                <p><strong>Website:</strong> www.example.com</p>
+                <p><strong>{t('impressum.section2.phone')}:</strong> {t('impressum.section2.phone_value')}</p>
+                <p><strong>{t('impressum.section2.email')}:</strong> {t('impressum.section2.email_value')}</p>
+                <p><strong>{t('impressum.section2.website')}:</strong> {t('impressum.section2.website_value')}</p>
               </div>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Umsatzsteuer-ID</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section3.title')}</h2>
               <p className="text-gray-300">
-                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
+                {t('impressum.section3.description')}
               </p>
-              <p className="text-gray-300">DE123456789</p>
+              <p className="text-gray-300">{t('impressum.section3.vat_id')}</p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section4.title')}</h2>
               <div className="text-gray-300 space-y-2">
-                <p>Max Mustermann</p>
-                <p>Musterstraße 123</p>
-                <p>12345 Musterstadt</p>
+                <p>{t('impressum.section4.name')}</p>
+                <p>{t('impressum.section4.street')}</p>
+                <p>{t('impressum.section4.city')}</p>
               </div>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">EU-Streitschlichtung</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section5.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
+                {t('impressum.section5.description')}
                 <a href="https://ec.europa.eu/consumers/odr/" className="text-rose-400 hover:text-rose-300 underline ml-1">
                   https://ec.europa.eu/consumers/odr/
                 </a>
               </p>
               <p className="text-gray-300">
-                Unsere E-Mail-Adresse finden Sie oben im Impressum.
+                {t('impressum.section5.email_note')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Verbraucherstreitbeilegung/Universalschlichtungsstelle</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section6.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer 
-                Verbraucherschlichtungsstelle teilzunehmen.
+                {t('impressum.section6.description')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Haftung für Inhalte</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section7.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den 
-                allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht 
-                unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach 
-                Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+                {t('impressum.section7.description')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Haftung für Links</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section8.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. 
-                Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der 
-                verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+                {t('impressum.section8.description')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">Urheberrecht</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('impressum.section9.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen 
-                Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der 
-                Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+                {t('impressum.section9.description')}
               </p>
             </section>
           </div>

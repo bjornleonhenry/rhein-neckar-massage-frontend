@@ -6,7 +6,7 @@ import { ButtonHover } from '../components/ui/button-hover';
 import { useTranslation } from '@/hooks/useTranslation';
 
 const Kontakt = () => {
-  const { isLoading } = useTranslation();
+  const { t, isLoading } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,20 +21,20 @@ const Kontakt = () => {
   const [submitError, setSubmitError] = useState('');
 
   const openingHours = [
-    { day: "Montag - Freitag", hours: "12:00 - 24:00" },
-    { day: "Samstag", hours: "14:00 - 02:00" },
-    { day: "Sonntag", hours: "16:00 - 24:00" }
+    { day: t('kontakt.hours.1.day'), hours: t('kontakt.hours.1.time') },
+    { day: t('kontakt.hours.2.day'), hours: t('kontakt.hours.2.time') },
+    { day: t('kontakt.hours.3.day'), hours: t('kontakt.hours.3.time') }
   ];
 
   const services = [
-    "Erotik Massage",
-    "Tantra Massage",
-    "VIP Service",
-    "Paar Erlebnis",
-    "Body-to-Body",
-    "Girlfriend Experience",
-    "Thai Massage",
-    "Öl Massage"
+    t('kontakt.form.service.1'),
+    t('kontakt.form.service.2'),
+    t('kontakt.form.service.3'),
+    t('kontakt.form.service.4'),
+    t('kontakt.form.service.5'),
+    t('kontakt.form.service.6'),
+    t('kontakt.form.service.7'),
+    t('kontakt.form.service.8')
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,11 +69,11 @@ const Kontakt = () => {
           message: ''
         });
       } else {
-        setSubmitError(result.message || 'Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut.');
+        setSubmitError(result.message || t('kontakt.form.error'));
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitError('Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut.');
+      setSubmitError(t('kontakt.form.error'));
     } finally {
       setIsSubmitting(false);
     }
@@ -93,7 +93,7 @@ const Kontakt = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-400 mx-auto"></div>
-              <p className="text-gray-300 mt-4">Lade Kontakt...</p>
+              <p className="text-gray-300 mt-4">{t('kontakt.loading')}</p>
             </div>
           </div>
         </section>
@@ -111,7 +111,7 @@ const Kontakt = () => {
               preset="slide"
               per="word"
             >
-              Kontakt & Terminbuchung
+              {t('kontakt.title')}
             </TextEffect>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -119,7 +119,7 @@ const Kontakt = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
             >
-              Vereinbaren Sie noch heute Ihren diskreten Termin für eine exklusive Massage-Erfahrung.
+              {t('kontakt.description')}
             
             </motion.p>
           </div>
@@ -132,13 +132,11 @@ const Kontakt = () => {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="bg-gray-900 border border-rose-900/30 rounded-xl p-8 shadow-lg mb-8 hover:border-rose-400/50 transition-all duration-300"
             >
-              <motion.h3
-                className="text-2xl font-bold text-white mb-6"
-              >
-                Kontaktinformationen
-              </motion.h3>
-
-              <div className="space-y-6">
+                <motion.h3
+                  className="text-2xl font-bold text-white mb-6"
+                >
+                  {t('kontakt.info.title')}
+                </motion.h3>              <div className="space-y-6">
                 <motion.div
                   className="flex items-start space-x-4"
                 >
@@ -148,12 +146,8 @@ const Kontakt = () => {
                     <MapPin className="w-6 h-6 text-rose-400" />
                   </motion.div>
                   <div>
-                    <h4 className="font-semibold text-white">Adresse</h4>
-                    <p className="text-gray-300">
-                      Elisabethenstraße 45<br />
-                      64283 Heidelberg<br />
-                      Deutschland
-                    </p>
+                    <h4 className="font-semibold text-white">{t('kontakt.info.address.title')}</h4>
+                    <p className="text-gray-300" dangerouslySetInnerHTML={{ __html: t('kontakt.info.address.value') }}></p>
                   </div>
                 </motion.div>
 
@@ -166,9 +160,9 @@ const Kontakt = () => {
                     <Phone className="w-6 h-6 text-rose-400" />
                   </motion.div>
                   <div>
-                    <h4 className="font-semibold text-white">Telefon</h4>
-                    <p className="text-gray-300">+49 151 00000000</p>
-                    <p className="text-gray-400 text-sm">Täglich erreichbar</p>
+                    <h4 className="font-semibold text-white">{t('kontakt.info.phone.title')}</h4>
+                    <p className="text-gray-300">{t('kontakt.info.phone.value')}</p>
+                    <p className="text-gray-400 text-sm">{t('kontakt.info.phone.note')}</p>
                   </div>
                 </motion.div>
 
@@ -181,9 +175,9 @@ const Kontakt = () => {
                     <Mail className="w-6 h-6 text-rose-400" />
                   </motion.div>
                   <div>
-                    <h4 className="font-semibold text-white">E-Mail</h4>
-                    <p className="text-gray-300">paygirls@erotischsmassage.com</p>
-                    <p className="text-gray-400 text-sm">Antwort innerhalb 24h</p>
+                    <h4 className="font-semibold text-white">{t('kontakt.info.email.title')}</h4>
+                    <p className="text-gray-300">{t('kontakt.info.email.value')}</p>
+                    <p className="text-gray-400 text-sm">{t('kontakt.info.email.note')}</p>
                   </div>
                 </motion.div>
               </div>
@@ -204,7 +198,7 @@ const Kontakt = () => {
                 >
                   <Clock className="w-6 h-6 text-rose-400" />
                 </motion.div>
-                Öffnungszeiten
+                {t('kontakt.hours.title')}
               </motion.h3>
 
               <div className="space-y-4">
@@ -223,8 +217,7 @@ const Kontakt = () => {
                 className="mt-6 p-4 bg-rose-900/10 rounded-lg border border-rose-900/30"
               >
                 <p className="text-rose-300 text-sm">
-                  <strong>Hinweis:</strong> Termine außerhalb der regulären Öffnungszeiten
-                  sind nach Absprache möglich. Kontaktieren Sie uns für individuelle Vereinbarungen.
+                  <strong>{t('kontakt.hours.note.strong')}:</strong> {t('kontakt.hours.note.text')}
                 </p>
               </motion.div>
             </motion.div>
@@ -239,7 +232,7 @@ const Kontakt = () => {
               <motion.h3
                 className="text-2xl font-bold text-white mb-6"
               >
-                Standort
+                {t('kontakt.location.title')}
               </motion.h3>
               <motion.div
                 className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center"
@@ -249,8 +242,8 @@ const Kontakt = () => {
                   >
                     <MapPin className="w-12 h-12 text-rose-400 mx-auto mb-4" />
                   </motion.div>
-                  <p className="text-gray-300">Google Maps Integration</p>
-                  <p className="text-gray-400 text-sm">Elisabethenstraße 45, 64283 Heidelberg</p>
+                  <p className="text-gray-300">{t('kontakt.location.placeholder')}</p>
+                  <p className="text-gray-400 text-sm">{t('kontakt.location.address')}</p>
                 </div>
               </motion.div>
               <div className="mt-4 space-y-1">
@@ -274,7 +267,7 @@ const Kontakt = () => {
                 >
                   <Calendar className="w-6 h-6 text-rose-400 mr-2" />
                 </motion.div>
-                Termin vereinbaren
+                {t('kontakt.form.title')}
               </motion.h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -283,7 +276,7 @@ const Kontakt = () => {
                     className="space-y-2"
                   >
                     <label className="block text-sm font-medium text-gray-300">
-                      Vorname *
+                      {t('kontakt.form.name.label')} *
                     </label>
                     <motion.input
                       whileFocus={{ scale: 1.01 }}
@@ -292,7 +285,7 @@ const Kontakt = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
-                      placeholder="Ihr Vorname"
+                      placeholder={t('kontakt.form.name.placeholder')}
                       required
                     />
                   </motion.div>
@@ -300,7 +293,7 @@ const Kontakt = () => {
                     className="space-y-2"
                   >
                     <label className="block text-sm font-medium text-gray-300">
-                      Telefon *
+                      {t('kontakt.form.phone.label')} *
                     </label>
                     <motion.input
                       whileFocus={{ scale: 1.01 }}
@@ -309,7 +302,7 @@ const Kontakt = () => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
-                      placeholder="+49 123 456789"
+                      placeholder={t('kontakt.form.phone.placeholder')}
                       required
                     />
                   </motion.div>
@@ -319,7 +312,7 @@ const Kontakt = () => {
                   className="space-y-2"
                 >
                   <label className="block text-sm font-medium text-gray-300">
-                    E-Mail (optional)
+                    {t('kontakt.form.email.label')}
                   </label>
                   <motion.input
                     whileFocus={{ scale: 1.01 }}
@@ -328,7 +321,7 @@ const Kontakt = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
-                    placeholder="ihre.email@beispiel.de"
+                    placeholder={t('kontakt.form.email.placeholder')}
                   />
                 </motion.div>
 
@@ -336,7 +329,7 @@ const Kontakt = () => {
                   className="space-y-2"
                 >
                   <label className="block text-sm font-medium text-gray-300">
-                    Gewünschte Behandlung *
+                    {t('kontakt.form.service.label')} *
                   </label>
                   <motion.select
                     whileFocus={{ scale: 1.01 }}
@@ -346,7 +339,7 @@ const Kontakt = () => {
                     className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                     required
                   >
-                    <option value="">Service wählen</option>
+                    <option value="">{t('kontakt.form.service.placeholder')}</option>
                     {services.map((service, idx) => (
                       <option key={idx} value={service}>{service}</option>
                     ))}
@@ -358,7 +351,7 @@ const Kontakt = () => {
                     className="space-y-2"
                   >
                     <label className="block text-sm font-medium text-gray-300">
-                      Wunschdatum
+                      {t('kontakt.form.date.label')}
                     </label>
                     <motion.input
                       whileFocus={{ scale: 1.01 }}
@@ -373,7 +366,7 @@ const Kontakt = () => {
                     className="space-y-2"
                   >
                     <label className="block text-sm font-medium text-gray-300">
-                      Wunschzeit
+                      {t('kontakt.form.time.label')}
                     </label>
                     <motion.input
                       whileFocus={{ scale: 1.01 }}
@@ -390,7 +383,7 @@ const Kontakt = () => {
                   className="space-y-2"
                 >
                   <label className="block text-sm font-medium text-gray-300">
-                    Nachricht (optional)
+                    {t('kontakt.form.message.label')}
                   </label>
                   <motion.textarea
                     whileFocus={{ scale: 1.01 }}
@@ -399,7 +392,7 @@ const Kontakt = () => {
                     value={formData.message}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none bg-gray-700 text-white"
-                    placeholder="Besondere Wünsche oder Anmerkungen..."
+                    placeholder={t('kontakt.form.message.placeholder')}
                   />
                 </motion.div>
 
@@ -407,8 +400,7 @@ const Kontakt = () => {
                   className="bg-gray-800 p-4 rounded-lg"
                 >
                   <p className="text-xs text-gray-400 leading-relaxed">
-                    * Pflichtfelder. Ihre Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.
-                    Mit dem Absenden stimmen Sie unserer Datenschutzerklärung zu.
+                    {t('kontakt.form.privacy')}
                   </p>
                 </motion.div>
 
@@ -419,7 +411,7 @@ const Kontakt = () => {
                     className="p-4 bg-green-900/20 border border-green-500/50 rounded-lg"
                   >
                     <p className="text-green-400 text-center">
-                      ✓ Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir werden uns bald bei Ihnen melden.
+                      ✓ {t('kontakt.form.success')}
                     </p>
                   </motion.div>
                 )}
@@ -447,7 +439,7 @@ const Kontakt = () => {
                       >
                         <Send className="w-5 h-5" />
                       </motion.div>
-                      <span>{isSubmitting ? 'Wird gesendet...' : 'Terminanfrage senden'}</span>
+                      <span>{isSubmitting ? t('kontakt.form.submitting') : t('kontakt.form.submit')}</span>
                     </div>
                   </ButtonHover>
                 </motion.div>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Calendar, Clock, User, Heart, Star, Phone, Mail, ArrowLeft, Check } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Buchen = () => {
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
   const selectedGirl = searchParams.get('girl');
   
   const [bookingData, setBookingData] = useState({
@@ -80,11 +82,11 @@ const Buchen = () => {
       if (response.ok) {
         setIsSubmitted(true);
       } else {
-        alert('Fehler beim Senden der Buchungsanfrage: ' + (result.message || 'Bitte versuchen Sie es später erneut.'));
+        alert(t('buchen.error.submit') + ' ' + (result.message || t('buchen.error.retry')));
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Fehler beim Senden der Buchungsanfrage. Bitte versuchen Sie es später erneut.');
+      alert(t('buchen.error.submit_full'));
     }
   };
 
@@ -105,25 +107,24 @@ const Buchen = () => {
               <div className="bg-green-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Check className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-white mb-4">Buchung erfolgreich!</h1>
+              <h1 className="text-3xl font-bold text-white mb-4">{t('buchen.success.title')}</h1>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                Vielen Dank für Ihre Buchungsanfrage. Wir werden uns innerhalb der nächsten 2 Stunden 
-                bei Ihnen melden, um den Termin zu bestätigen.
+                {t('buchen.success.message')}
               </p>
               <div className="bg-gray-800 p-4 rounded-lg mb-6">
-                <h3 className="text-white font-semibold mb-2">Ihre Buchungsdetails:</h3>
+                <h3 className="text-white font-semibold mb-2">{t('buchen.success.details')}</h3>
                 <div className="text-sm text-gray-300 space-y-1">
-                  <p><strong>Masseurin:</strong> {bookingData.girl}</p>
-                  <p><strong>Service:</strong> {bookingData.service}</p>
-                  <p><strong>Datum:</strong> {bookingData.date}</p>
-                  <p><strong>Uhrzeit:</strong> {bookingData.time}</p>
+                  <p><strong>{t('buchen.success.girl')}</strong> {bookingData.girl}</p>
+                  <p><strong>{t('buchen.success.service')}</strong> {bookingData.service}</p>
+                  <p><strong>{t('buchen.success.date')}</strong> {bookingData.date}</p>
+                  <p><strong>{t('buchen.success.time')}</strong> {bookingData.time}</p>
                 </div>
               </div>
               <Link 
                 to="/" 
                 className="bg-rose-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors inline-block"
               >
-                Zur Startseite
+                {t('buchen.success.back_home')}
               </Link>
             </div>
           </div>
@@ -139,11 +140,11 @@ const Buchen = () => {
           <div className="text-center mb-12">
             <Link to="/" className="inline-flex items-center text-rose-400 hover:text-rose-300 mb-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Zurück zur Startseite
+              {t('buchen.back_home')}
             </Link>
-            <h1 className="text-4xl font-bold text-white mb-4">Termin buchen</h1>
+            <h1 className="text-4xl font-bold text-white mb-4">{t('buchen.title')}</h1>
             <p className="text-xl text-gray-300">
-              Buchen Sie Ihren exklusiven Massage-Termin in nur wenigen Schritten
+              {t('buchen.description')}
             </p>
           </div>
 
@@ -174,12 +175,12 @@ const Buchen = () => {
               {/* Step 1: Service Selection */}
               {step === 1 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">Schritt 1: Service & Masseurin wählen</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">{t('buchen.step1.title')}</h2>
                   
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Masseurin auswählen *
+                        {t('buchen.step1.girl_label')}
                       </label>
                       <select
                         name="girl"
@@ -188,7 +189,7 @@ const Buchen = () => {
                         className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                         required
                       >
-                        <option value="">Bitte wählen</option>
+                        <option value="">{t('buchen.select.placeholder')}</option>
                         {girls.filter(girl => girl.available).map((girl, idx) => (
                           <option key={idx} value={girl.name}>
                             {girl.name} - {Array.isArray(girl.specialties) ? girl.specialties.join(', ') : (girl.specialties || 'Massage')}
@@ -199,7 +200,7 @@ const Buchen = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Service auswählen *
+                        {t('buchen.step1.service_label')}
                       </label>
                       <select
                         name="service"
@@ -208,7 +209,7 @@ const Buchen = () => {
                         className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                         required
                       >
-                        <option value="">Bitte wählen</option>
+                        <option value="">{t('buchen.select.placeholder')}</option>
                         {services.map((service, idx) => (
                           <option key={idx} value={service.name}>
                             {service.name} - {service.duration} - {service.price}
@@ -225,7 +226,7 @@ const Buchen = () => {
                       disabled={!bookingData.girl || !bookingData.service}
                       className="bg-rose-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
                     >
-                      Weiter
+                      {t('buchen.button.next')}
                     </button>
                   </div>
                 </div>
@@ -234,12 +235,12 @@ const Buchen = () => {
               {/* Step 2: Date & Time */}
               {step === 2 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">Schritt 2: Datum & Uhrzeit wählen</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">{t('buchen.step2.title')}</h2>
                   
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Wunschdatum *
+                        {t('buchen.step2.date_label')}
                       </label>
                       <input
                         type="date"
@@ -254,7 +255,7 @@ const Buchen = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-3">
-                        Wunschzeit *
+                        {t('buchen.step2.time_label')}
                       </label>
                       <select
                         name="time"
@@ -263,7 +264,7 @@ const Buchen = () => {
                         className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                         required
                       >
-                        <option value="">Bitte wählen</option>
+                        <option value="">{t('buchen.select.placeholder')}</option>
                         {timeSlots.map((time, idx) => (
                           <option key={idx} value={time}>{time}</option>
                         ))}
@@ -273,7 +274,7 @@ const Buchen = () => {
 
                   <div className="mt-6">
                     <label className="block text-sm font-medium text-gray-300 mb-3">
-                      Besondere Wünsche (optional)
+                      {t('buchen.step2.requests_label')}
                     </label>
                     <textarea
                       rows={3}
@@ -281,7 +282,7 @@ const Buchen = () => {
                       value={bookingData.specialRequests}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none bg-gray-700 text-white"
-                      placeholder="Teilen Sie uns Ihre besonderen Wünsche mit..."
+                      placeholder={t('buchen.step2.requests_placeholder')}
                     />
                   </div>
 
@@ -291,7 +292,7 @@ const Buchen = () => {
                       onClick={prevStep}
                       className="border border-rose-600 text-rose-400 px-8 py-3 rounded-lg font-semibold hover:bg-rose-600 hover:text-white transition-colors"
                     >
-                      Zurück
+                      {t('buchen.button.back')}
                     </button>
                     <button
                       type="button"
@@ -299,7 +300,7 @@ const Buchen = () => {
                       disabled={!bookingData.date || !bookingData.time}
                       className="bg-rose-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
                     >
-                      Weiter
+                      {t('buchen.button.next')}
                     </button>
                   </div>
                 </div>
@@ -308,12 +309,12 @@ const Buchen = () => {
               {/* Step 3: Contact Information */}
               {step === 3 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">Schritt 3: Kontaktdaten</h2>
+                  <h2 className="text-2xl font-bold text-white mb-6">{t('buchen.step3.title')}</h2>
                   
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Vorname *
+                        {t('buchen.step3.name_label')}
                       </label>
                       <input
                         type="text"
@@ -327,7 +328,7 @@ const Buchen = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Telefon *
+                        {t('buchen.step3.phone_label')}
                       </label>
                       <input
                         type="tel"
@@ -342,7 +343,7 @@ const Buchen = () => {
 
                   <div className="mt-6">
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      E-Mail (optional)
+                      {t('buchen.step3.email_label')}
                     </label>
                     <input
                       type="email"
@@ -355,7 +356,7 @@ const Buchen = () => {
 
                   <div className="mt-6">
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Nachricht (optional)
+                      {t('buchen.step3.message_label')}
                     </label>
                     <textarea
                       rows={4}
@@ -363,24 +364,23 @@ const Buchen = () => {
                       value={bookingData.message}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none bg-gray-700 text-white"
-                      placeholder="Weitere Informationen oder Anmerkungen..."
+                      placeholder={t('buchen.step3.message_placeholder')}
                     />
                   </div>
 
                   <div className="mt-6 bg-gray-800 p-4 rounded-lg">
-                    <h3 className="text-white font-semibold mb-2">Buchungsübersicht:</h3>
+                    <h3 className="text-white font-semibold mb-2">{t('buchen.step3.summary_title')}</h3>
                     <div className="text-sm text-gray-300 space-y-1">
-                      <p><strong>Masseurin:</strong> {bookingData.girl}</p>
-                      <p><strong>Service:</strong> {bookingData.service}</p>
-                      <p><strong>Datum:</strong> {bookingData.date}</p>
-                      <p><strong>Uhrzeit:</strong> {bookingData.time}</p>
+                      <p><strong>{t('buchen.step3.summary_girl')}</strong> {bookingData.girl}</p>
+                      <p><strong>{t('buchen.step3.summary_service')}</strong> {bookingData.service}</p>
+                      <p><strong>{t('buchen.step3.summary_date')}</strong> {bookingData.date}</p>
+                      <p><strong>{t('buchen.step3.summary_time')}</strong> {bookingData.time}</p>
                     </div>
                   </div>
 
                   <div className="mt-6 bg-gray-800 p-4 rounded-lg">
                     <p className="text-xs text-gray-400 leading-relaxed">
-                      * Pflichtfelder. Mit dem Absenden bestätigen Sie, dass Sie über 18 Jahre alt sind 
-                      und unseren Geschäftsbedingungen zustimmen. Ihre Daten werden vertraulich behandelt.
+                      {t('buchen.step3.disclaimer')}
                     </p>
                   </div>
 
@@ -390,7 +390,7 @@ const Buchen = () => {
                       onClick={prevStep}
                       className="border border-rose-600 text-rose-400 px-8 py-3 rounded-lg font-semibold hover:bg-rose-600 hover:text-white transition-colors"
                     >
-                      Zurück
+                      {t('buchen.button.back')}
                     </button>
                     <button
                       type="submit"
@@ -398,7 +398,7 @@ const Buchen = () => {
                       className="bg-rose-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center"
                     >
                       <Heart className="w-5 h-5 mr-2" />
-                      Buchung abschließen
+                      {t('buchen.button.submit')}
                     </button>
                   </div>
                 </div>

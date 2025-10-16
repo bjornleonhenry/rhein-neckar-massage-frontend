@@ -31,7 +31,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/10.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["Tantra", "Erotische Massage", "Verführung"],
       available: true,
-      description: "Verführerische Göttin mit sinnlichen Techniken für ultimatives Lustempfinden."
+      description: t('girls.lila.description')
     },
     {
       name: "Maya",
@@ -40,7 +40,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/11.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["Erotik Massage", "Öl Massage", "VIP Service"],
       available: true,
-      description: "Elegante Verführerin für leidenschaftliche Nächte voller sinnlicher Versuchungen."
+      description: t('girls.maya.description')
     },
     {
       name: "Nira",
@@ -49,7 +49,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/12.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["Paar Massage", "Erotische Wellness", "Verführung"],
       available: false,
-      description: "Spezialistin für leidenschaftliche Paar-Erlebnisse und sinnliche Begierde."
+      description: t('girls.nira.description')
     },
     {
       name: "Kira",
@@ -58,7 +58,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/13.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["Tantra", "Erotische Meditation", "Sinnliche Energie"],
       available: true,
-      description: "Mystische Verführerin die traditionelle Massage mit erotischen Tantra-Praktiken verbindet."
+      description: t('girls.kira.description')
     },
     {
       name: "Siri",
@@ -67,7 +67,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/14.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["Hot Stone", "Erotische Massage", "Sinnliche Berührungen"],
       available: true,
-      description: "Expertin für sinnliche Massagen mit heißen Steinen und noch heißeren Berührungen."
+      description: t('girls.siri.description')
     },
     {
       name: "Ploy",
@@ -76,7 +76,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/15.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["Erotik Massage", "Sinnliche Körperbehandlung", "Verführung"],
       available: true,
-      description: "Jung und leidenschaftlich mit einer natürlichen Begierde nach sinnlichen Abenteuern."
+      description: t('girls.ploy.description')
     },
     {
       name: "Anya",
@@ -85,7 +85,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/16.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["VIP Service", "Luxus Erotik", "Diskrete Verführung"],
       available: false,
-      description: "Exklusive VIP-Verführerin für besonders leidenschaftliche und diskrete Erlebnisse."
+      description: t('girls.anya.description')
     },
     {
       name: "Nin",
@@ -94,7 +94,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
       image: "images/users/19.webp?auto=compress&cs=tinysrgb&w=600",
       specialties: ["Aphrodisische Aromatherapie", "Erotische Entspannung", "Sinnliche Wellness"],
       available: true,
-      description: "Spezialistin für erregende Aromatherapie und sinnliche Erotik-Massagen."
+      description: t('girls.nin.description')
     }
   ];
 
@@ -109,7 +109,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
     image: profile.main_image_url || profile.image || "images/users/10.webp?auto=compress&cs=tinysrgb&w=600",
     specialties: profile.services || profile.massages || ["Erotische Massage", "Verführung"],
     available: true, // Default to available
-    description: profile.description || "Verführerische Göttin mit sinnlichen Techniken für ultimatives Lustempfinden."
+    description: profile.description || t('girls.description_default')
   })) : [];
   
   const girls = transformedApiGirls.length > 0 ? transformedApiGirls : staticGirls;
@@ -118,9 +118,9 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
     <section className="py-20 bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">Unsere Verführerischen Masseurinnen</h2>
+          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">{t('girls.title')}</h2>
           <p className="text-sm sm:text-xl text-gray-300 max-w-3xl mx-auto">
-            Entdecken Sie unsere leidenschaftlichen und sinnlichen Göttinnen der Erotik, die Ihre wildesten Fantasien wahr werden lassen.
+            {t('girls.description')}
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -174,7 +174,7 @@ const GirlsProfiles = ({ hideActions = false }: GirlsProfilesProps) => {
                       to={`/buchen?girl=${encodeURIComponent(girl.name)}`}
                       className="bg-rose-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-rose-700 transition-colors inline-block"
                     >
-                      Buchen
+                      {t('girls.book')}
                     </Link>
                   </div>
                 )}

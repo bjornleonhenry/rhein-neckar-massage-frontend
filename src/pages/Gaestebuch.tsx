@@ -63,24 +63,24 @@ const Gaestebuch = () => {
         setGuestbookEntries(verifiedEntries);
       } catch (error) {
         console.error('Error loading guestbook entries:', error);
-        setApiError('Fehler beim Laden der Bewertungen');
+        setApiError(t('gaestebuch.error.load'));
       } finally {
         setApiLoading(false);
       }
     };
 
     loadEntries();
-  }, []);
+  }, [t]);
 
   const services = [
-    "Erotik Massage",
-    "Tantra Massage", 
-    "VIP Service",
-    "Paar Erlebnis",
-    "Body-to-Body",
-    "Girlfriend Experience",
-    "Thai Massage",
-    "Öl Massage"
+    t('gaestebuch.services.erotik_massage'),
+    t('gaestebuch.services.tantra_massage'),
+    t('gaestebuch.services.vip_service'),
+    t('gaestebuch.services.paar_erlebnis'),
+    t('gaestebuch.services.body_to_body'),
+    t('gaestebuch.services.girlfriend_experience'),
+    t('gaestebuch.services.thai_massage'),
+    t('gaestebuch.services.oel_massage')
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -138,7 +138,7 @@ const Gaestebuch = () => {
 
     } catch (error) {
       console.error('Error submitting guestbook entry:', error);
-      setSubmitError('Es gab einen Fehler beim Absenden Ihrer Bewertung. Bitte versuchen Sie es später erneut.');
+      setSubmitError(t('gaestebuch.error.submit'));
     } finally {
       setIsSubmitting(false);
     }
@@ -164,9 +164,9 @@ const Gaestebuch = () => {
           <section className="py-20 bg-gradient-to-br from-gray-900 via-purple-900/20 to-rose-900/20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 px-4 sm:px-6 md:px-0 text-sm hidden md:block">
-            <h1 className="text-5xl font-bold text-white mb-6">Gästebuch</h1>
+            <h1 className="text-5xl font-bold text-white mb-6">{t('gaestebuch.title')}</h1>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Lesen Sie die Erfahrungen unserer geschätzten Kunden und teilen Sie Ihre eigenen Erlebnisse mit uns.
+              {t('gaestebuch.description')}
             </p>
           </div>
 
@@ -175,19 +175,19 @@ const Gaestebuch = () => {
             <div className="lg:col-span-2">
               <h2 className="text-2xl font-bold text-white mb-8 flex items-center">
                 <MessageCircle className="w-6 h-6 text-rose-400 mr-2" />
-                Kundenbewertungen
+                {t('gaestebuch.entries.title')}
               </h2>
               
               <div className="space-y-6">
                 {apiError && (
                   <div className="bg-gray-900 border border-red-900/30 rounded-xl p-6 text-center">
-                    <p className="text-red-400">Fehler beim Laden der Bewertungen: {apiError}</p>
+                    <p className="text-red-400">{t('gaestebuch.error.load_full')} {apiError}</p>
                   </div>
                 )}
 
                 {!apiError && guestbookEntries.length === 0 && (
                   <div className="bg-gray-900 border border-rose-900/30 rounded-xl p-6 text-center">
-                    <p className="text-gray-300">Noch keine Bewertungen vorhanden.</p>
+                    <p className="text-gray-300">{t('gaestebuch.entries.empty')}</p>
                   </div>
                 )}
 
@@ -206,7 +206,7 @@ const Gaestebuch = () => {
                             <h4 className="font-semibold text-white">{entry.name}</h4>
                             {entry.verified && (
                               <span className="bg-green-600 text-white px-2 py-1 rounded-full text-xs">
-                                Verifiziert
+                                {t('gaestebuch.entries.verified')}
                               </span>
                             )}
                           </div>
@@ -244,14 +244,14 @@ const Gaestebuch = () => {
               <div className="bg-gray-900 border border-rose-900/30 rounded-xl p-6 sticky top-24">
                 <h3 className="text-xl font-bold text-white mb-6 flex items-center">
                   <Heart className="w-5 h-5 text-rose-400 mr-2" />
-                  Ihre Bewertung
+                  {t('gaestebuch.form.title')}
                 </h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {submitSuccess && (
                     <div className="p-3 bg-green-600/20 border border-green-600/30 rounded-lg">
                       <p className="text-sm text-green-400">
-                        ✅ Vielen Dank für Ihre Bewertung! Sie wird nach Prüfung veröffentlicht.
+                        {t('gaestebuch.form.success')}
                       </p>
                     </div>
                   )}
@@ -266,20 +266,20 @@ const Gaestebuch = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Name (optional)
+                      {t('gaestebuch.form.name_label')}
                     </label>
                     <input
                       type="text"
                       value={newEntry.name}
                       onChange={(e) => setNewEntry({...newEntry, name: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
-                      placeholder="Ihr Name oder Initialen"
+                      placeholder={t('gaestebuch.form.name_placeholder')}
                     />
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Service
+                      {t('gaestebuch.form.service_label')}
                     </label>
                     <select
                       value={newEntry.service}
@@ -287,7 +287,7 @@ const Gaestebuch = () => {
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                       required
                     >
-                      <option value="">Service wählen</option>
+                      <option value="">{t('gaestebuch.form.service_placeholder')}</option>
                       {services.map((service, idx) => (
                         <option key={idx} value={service}>{service}</option>
                       ))}
@@ -296,7 +296,7 @@ const Gaestebuch = () => {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Bewertung
+                      {t('gaestebuch.form.rating_label')}
                     </label>
                     <div className="flex space-x-1">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -320,14 +320,14 @@ const Gaestebuch = () => {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Ihre Erfahrung
+                      {t('gaestebuch.form.message_label')}
                     </label>
                     <textarea
                       rows={4}
                       value={newEntry.message}
                       onChange={(e) => setNewEntry({...newEntry, message: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none bg-gray-700 text-white"
-                      placeholder="Teilen Sie Ihre Erfahrung mit uns..."
+                      placeholder={t('gaestebuch.form.message_placeholder')}
                       required
                     />
                   </div>
@@ -337,14 +337,13 @@ const Gaestebuch = () => {
                     disabled={isSubmitting}
                     className="w-full bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
                   >
-                    {isSubmitting ? 'Wird gesendet...' : 'Bewertung abgeben'}
+                    {isSubmitting ? t('gaestebuch.form.submit_loading') : t('gaestebuch.form.submit')}
                   </button>
                 </form>
                 
                 <div className="mt-6 p-4 bg-gray-800 rounded-lg">
                   <p className="text-xs text-gray-400 leading-relaxed">
-                    Ihre Bewertung wird nach Prüfung veröffentlicht. Wir behalten uns vor, 
-                    unangemessene Inhalte zu entfernen. Alle Bewertungen werden vertraulich behandelt.
+                    {t('gaestebuch.form.disclaimer')}
                   </p>
                 </div>
               </div>

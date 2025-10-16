@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Heart, Star, Users, Euro, Send, Shield } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Jobs = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<{
     firstName: string;
     lastName: string;
@@ -36,44 +38,44 @@ const Jobs = () => {
   const benefits = [
     {
       icon: <Euro className="w-6 h-6" />,
-      title: "Attraktive Verdienstmöglichkeiten",
-      description: "Überdurchschnittliche Bezahlung mit flexiblen Arbeitszeiten"
+      title: t('jobs.benefits.1.title'),
+      description: t('jobs.benefits.1.description')
     },
     {
       icon: <Shield className="w-6 h-6" />,
-      title: "Sichere Arbeitsumgebung",
-      description: "Professionelle und diskrete Atmosphäre mit Sicherheitspersonal"
+      title: t('jobs.benefits.2.title'),
+      description: t('jobs.benefits.2.description')
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: "Teamwork & Support",
-      description: "Unterstützung durch erfahrenes Team und Management"
+      title: t('jobs.benefits.3.title'),
+      description: t('jobs.benefits.3.description')
     },
     {
       icon: <Star className="w-6 h-6" />,
-      title: "Luxuriöse Ausstattung",
-      description: "Arbeiten in eleganten, hochwertigen Räumlichkeiten"
+      title: t('jobs.benefits.4.title'),
+      description: t('jobs.benefits.4.description')
     }
   ];
 
   const requirements = [
-    "Mindestalter 21 Jahre",
-    "Gepflegtes Erscheinungsbild",
-    "Zuverlässigkeit und Pünktlichkeit",
-    "Diskrete und professionelle Arbeitsweise",
-    "Grundkenntnisse in Deutsch oder Englisch",
-    "Gesundheitszeugnis erforderlich"
+    t('jobs.requirements.1'),
+    t('jobs.requirements.2'),
+    t('jobs.requirements.3'),
+    t('jobs.requirements.4'),
+    t('jobs.requirements.5'),
+    t('jobs.requirements.6')
   ];
 
   const specialtyOptions = [
-    "Thai Massage",
-    "Erotik Massage",
-    "Tantra Massage",
-    "Öl Massage",
-    "Body-to-Body",
-    "Paar Behandlungen",
-    "VIP Service",
-    "Girlfriend Experience"
+    t('jobs.form.specialty.1'),
+    t('jobs.form.specialty.2'),
+    t('jobs.form.specialty.3'),
+    t('jobs.form.specialty.4'),
+    t('jobs.form.specialty.5'),
+    t('jobs.form.specialty.6'),
+    t('jobs.form.specialty.7'),
+    t('jobs.form.specialty.8')
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -101,7 +103,7 @@ const Jobs = () => {
     if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.age || 
         !formData.nationality.trim() || !formData.languages.trim() || !formData.email.trim() || 
         !formData.phone.trim() || !formData.motivation.trim()) {
-      setSubmitError('Bitte füllen Sie alle erforderlichen Felder aus.');
+      setSubmitError(t('jobs.form.error.validation'));
       return;
     }
 
@@ -155,12 +157,12 @@ const Jobs = () => {
           const errorMessages = Object.values(result.errors).flat().join(', ');
           setSubmitError(`Validierungsfehler: ${errorMessages}`);
         } else {
-          setSubmitError(result.message || 'Fehler beim Senden der Bewerbung. Bitte versuchen Sie es später erneut.');
+          setSubmitError(t('jobs.form.error.submit'));
         }
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitError('Fehler beim Senden der Bewerbung. Bitte versuchen Sie es später erneut.');
+      setSubmitError(t('jobs.form.error.submit'));
     } finally {
       setIsSubmitting(false);
     }
@@ -171,10 +173,9 @@ const Jobs = () => {
       <section className="py-20 bg-gradient-to-br from-gray-900 via-purple-900/20 to-rose-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 px-4 sm:px-6 md:px-0 text-sm hidden md:block">
-            <h1 className="text-5xl font-bold text-white mb-6">Karriere bei PayGirls</h1>
+            <h1 className="text-5xl font-bold text-white mb-6">{t('jobs.title')}</h1>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Werden Sie Teil unseres exklusiven Teams und arbeiten Sie in einer professionellen, 
-              diskreten Umgebung mit attraktiven Verdienstmöglichkeiten.
+              {t('jobs.description')}
             </p>
           </div>
 
@@ -197,7 +198,7 @@ const Jobs = () => {
             {/* Requirements */}
             <div className="lg:col-span-1">
               <div className="bg-gray-900 border border-rose-900/30 rounded-xl p-8 mb-8">
-                <h3 className="text-2xl font-bold text-white mb-6">Voraussetzungen</h3>
+                <h3 className="text-2xl font-bold text-white mb-6">{t('jobs.requirements.title')}</h3>
                 <div className="space-y-3">
                   {requirements.map((requirement, index) => (
                     <div key={index} className="flex items-start">
@@ -209,23 +210,23 @@ const Jobs = () => {
               </div>
 
               <div className="bg-gray-900 border border-rose-900/30 rounded-xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-6">Bewerbungsprozess</h3>
+                <h3 className="text-2xl font-bold text-white mb-6">{t('jobs.process.title')}</h3>
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <div className="bg-rose-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">1</div>
-                    <span className="text-gray-300 text-sm">Online Bewerbung</span>
+                    <span className="text-gray-300 text-sm">{t('jobs.process.1')}</span>
                   </div>
                   <div className="flex items-center">
                     <div className="bg-rose-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">2</div>
-                    <span className="text-gray-300 text-sm">Persönliches Gespräch</span>
+                    <span className="text-gray-300 text-sm">{t('jobs.process.2')}</span>
                   </div>
                   <div className="flex items-center">
                     <div className="bg-rose-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">3</div>
-                    <span className="text-gray-300 text-sm">Probearbeiten</span>
+                    <span className="text-gray-300 text-sm">{t('jobs.process.3')}</span>
                   </div>
                   <div className="flex items-center">
                     <div className="bg-rose-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">4</div>
-                    <span className="text-gray-300 text-sm">Vertragsabschluss</span>
+                    <span className="text-gray-300 text-sm">{t('jobs.process.4')}</span>
                   </div>
                 </div>
               </div>
@@ -236,14 +237,14 @@ const Jobs = () => {
               <div className="bg-gray-900 border border-rose-900/30 rounded-xl p-8">
                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
                   <Heart className="w-6 h-6 text-rose-400 mr-2" />
-                  Bewerbungsformular
+                  {t('jobs.form.title')}
                 </h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Vorname *
+                        {t('jobs.form.firstName')}
                       </label>
                       <input
                         type="text"
@@ -256,7 +257,7 @@ const Jobs = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Nachname *
+                        {t('jobs.form.lastName')}
                       </label>
                       <input
                         type="text"
@@ -272,7 +273,7 @@ const Jobs = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Alter *
+                        {t('jobs.form.age')}
                       </label>
                       <input
                         type="number"
@@ -286,7 +287,7 @@ const Jobs = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Nationalität *
+                        {t('jobs.form.nationality')}
                       </label>
                       <input
                         type="text"
@@ -301,14 +302,14 @@ const Jobs = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Sprachen *
+                      {t('jobs.form.languages')}
                     </label>
                     <input
                       type="text"
                       name="languages"
                       value={formData.languages}
                       onChange={handleInputChange}
-                      placeholder="z.B. Deutsch, Englisch, Thai"
+                      placeholder={t('jobs.form.languages.placeholder')}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                       required
                     />
@@ -317,7 +318,7 @@ const Jobs = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        E-Mail *
+                        {t('jobs.form.email')}
                       </label>
                       <input
                         type="email"
@@ -330,7 +331,7 @@ const Jobs = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Telefon *
+                        {t('jobs.form.phone')}
                       </label>
                       <input
                         type="tel"
@@ -345,7 +346,7 @@ const Jobs = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Erfahrung in der Massage-Branche
+                      {t('jobs.form.experience')}
                     </label>
                     <select
                       name="experience"
@@ -353,17 +354,17 @@ const Jobs = () => {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                     >
-                      <option value="">Bitte wählen</option>
-                      <option value="keine">Keine Erfahrung</option>
-                      <option value="wenig">Wenig Erfahrung (unter 1 Jahr)</option>
-                      <option value="mittel">Mittlere Erfahrung (1-3 Jahre)</option>
-                      <option value="viel">Viel Erfahrung (über 3 Jahre)</option>
+                      <option value="">{t('jobs.form.experience.option1')}</option>
+                      <option value="keine">{t('jobs.form.experience.option2')}</option>
+                      <option value="wenig">{t('jobs.form.experience.option3')}</option>
+                      <option value="mittel">{t('jobs.form.experience.option4')}</option>
+                      <option value="viel">{t('jobs.form.experience.option5')}</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Verfügbarkeit
+                      {t('jobs.form.availability')}
                     </label>
                     <select
                       name="availability"
@@ -371,17 +372,17 @@ const Jobs = () => {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
                     >
-                      <option value="">Bitte wählen</option>
-                      <option value="vollzeit">Vollzeit</option>
-                      <option value="teilzeit">Teilzeit</option>
-                      <option value="wochenende">Nur Wochenende</option>
-                      <option value="flexibel">Flexibel</option>
+                      <option value="">{t('jobs.form.availability.option1')}</option>
+                      <option value="vollzeit">{t('jobs.form.availability.option2')}</option>
+                      <option value="teilzeit">{t('jobs.form.availability.option3')}</option>
+                      <option value="wochenende">{t('jobs.form.availability.option4')}</option>
+                      <option value="flexibel">{t('jobs.form.availability.option5')}</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Spezialitäten (mehrere auswählbar)
+                      {t('jobs.form.specialties')}
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                       {specialtyOptions.map((specialty, index) => (
@@ -400,14 +401,14 @@ const Jobs = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Motivation *
+                      {t('jobs.form.motivation')}
                     </label>
                     <textarea
                       rows={4}
                       name="motivation"
                       value={formData.motivation}
                       onChange={handleInputChange}
-                      placeholder="Warum möchten Sie bei uns arbeiten?"
+                      placeholder={t('jobs.form.motivation.placeholder')}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none bg-gray-700 text-white"
                       required
                     />
@@ -415,29 +416,28 @@ const Jobs = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Referenzen (optional)
+                      {t('jobs.form.references')}
                     </label>
                     <textarea
                       rows={3}
                       name="references"
                       value={formData.references}
                       onChange={handleInputChange}
-                      placeholder="Frühere Arbeitgeber oder Referenzen"
+                      placeholder={t('jobs.form.references.placeholder')}
                       className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none bg-gray-700 text-white"
                     />
                   </div>
 
                   <div className="bg-gray-800 p-4 rounded-lg">
                     <p className="text-xs text-gray-400 leading-relaxed">
-                      * Pflichtfelder. Ihre Bewerbung wird vertraulich behandelt. Alle Angaben werden 
-                      diskret geprüft und nur für den Bewerbungsprozess verwendet.
+                      {t('jobs.form.privacy')}
                     </p>
                   </div>
 
                   {submitSuccess && (
                     <div className="p-4 bg-green-900/20 border border-green-500/50 rounded-lg">
                       <p className="text-green-400 text-center">
-                        ✓ Vielen Dank für Ihre Bewerbung! Wir werden uns in Kürze bei Ihnen melden.
+                        {t('jobs.form.success')}
                       </p>
                     </div>
                   )}
@@ -456,7 +456,7 @@ const Jobs = () => {
                     className="w-full bg-rose-600 text-white py-4 rounded-lg font-semibold hover:bg-rose-700 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none cursor-pointer"
                   >
                     <Send className="w-5 h-5 mr-2" />
-                    {isSubmitting ? 'Wird gesendet...' : 'Bewerbung absenden'}
+                    {isSubmitting ? t('jobs.form.submit.loading') : t('jobs.form.submit.default')}
                   </button>
                 </form>
               </div>

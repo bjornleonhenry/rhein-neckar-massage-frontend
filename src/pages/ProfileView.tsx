@@ -4,11 +4,13 @@ import { useFetch } from '@/lib/useFetch';
 import { Button } from '@/components/ui/button';
 import { CardHover } from '@/components/ui/card-hover';
 import { useState } from 'react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const ProfileView = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [currentMainImage, setCurrentMainImage] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const { data: mieterinData, loading, error } = useFetch<any>(`/profiles/${id}`);
   
@@ -21,9 +23,9 @@ const ProfileView = () => {
   // Use current main image state or fallback to the original main image
   const displayMainImage = currentMainImage || girl?.main_image_url || girl?.image;
 
-  if (loading) return <div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-white">Loading...</div></div>;
+  if (loading) return <div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-white">{t('profile.loading')}</div></div>;
   if (error) return <div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-red-400">Error: {error.message}</div></div>;
-  if (!girl) return <div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-white">Profile not found</div></div>;
+  if (!girl) return <div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-white">{t('profile.notfound')}</div></div>;
 
   return (
     <div className="min-h-screen bg-gray-900 mt-11 lg:mt-9">
@@ -35,7 +37,7 @@ const ProfileView = () => {
             className="flex items-center text-gray-300 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
-            Zurück
+            {t('profile.back')}
           </button>
         </div>
       </div>
@@ -63,7 +65,7 @@ const ProfileView = () => {
                 {girl.available && (
                   <div className="absolute top-4 right-4">
                     <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold hidden">
-                      Verfügbar
+                      {t('profile.availability.available')}
                     </span>
                   </div>
                 )}
@@ -73,8 +75,8 @@ const ProfileView = () => {
             {/* Additional Images */}
             {girl.image_urls && girl.image_urls.length > 1 && (
               <div className="mt-6">
-                <h3 className="text-xl font-bold text-white mb-2">Weitere Bilder</h3>
-                <p className="text-gray-400 text-sm mb-4">Klicken Sie auf ein Bild, um es als Hauptbild anzuzeigen</p>
+                <h3 className="text-xl font-bold text-white mb-2">{t('profile.images.more')}</h3>
+                <p className="text-gray-400 text-sm mb-4">{t('profile.images.click')}</p>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {girl.image_urls
                     .filter((url: string) => url !== displayMainImage)
@@ -97,11 +99,11 @@ const ProfileView = () => {
           <div className="lg:col-span-1 space-y-6">
             {/* Basic Info */}
             <CardHover intensity="medium" className="bg-gray-800 border border-rose-900/30 rounded-xl p-6">
-              <h2 className="text-xl font-bold text-white mb-4">Über mich</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t('profile.personal.title')}</h2>
               <div className="space-y-3">
                 <div className="flex items-center text-gray-300">
                   <Calendar className="w-5 h-5 mr-3 text-rose-400" />
-                  <span>{girl.age} Jahre alt</span>
+                  <span>{girl.age} {t('profile.personal.age')}</span>
                 </div>
                 <div className="flex items-center text-gray-300">
                   <MapPin className="w-5 h-5 mr-3 text-rose-400" />
@@ -109,7 +111,7 @@ const ProfileView = () => {
                 </div>
                 <div className="flex items-center text-gray-300">
                   <Star className="w-5 h-5 mr-3 text-amber-400" />
-                  <span>{girl.rating ? `${girl.rating} Sterne Bewertung` : '4.9 Sterne Bewertung'}</span>
+                  <span>{girl.rating ? `${girl.rating} ${t('profile.reviews.stars')}` : `4.9 ${t('profile.reviews.stars')}`}</span>
                 </div>
                 {girl.workingHours && (
                   <div className="flex items-center text-gray-300">
@@ -128,72 +130,72 @@ const ProfileView = () => {
 
             {/* Physical Attributes */}
             <CardHover intensity="medium" className="bg-gray-800 border border-rose-900/30 rounded-xl p-6">
-              <h2 className="text-xl font-bold text-white mb-4">Körperliche Eigenschaften</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t('profile.physical.title')}</h2>
               <div className="space-y-3">
                 {girl.height && (
                   <div className="flex items-center text-gray-300">
                     <Ruler className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>{girl.height} cm</span>
+                    <span>{t('profile.physical.height')}: {girl.height} cm</span>
                   </div>
                 )}
                 {girl.weight && (
                   <div className="flex items-center text-gray-300">
                     <Scale className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>{girl.weight} kg</span>
+                    <span>{t('profile.physical.weight')}: {girl.weight} kg</span>
                   </div>
                 )}
                 {girl.bust_size && (
                   <div className="flex items-center text-gray-300">
                     <Heart className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Oberweite: {girl.bust_size}</span>
+                    <span>{t('profile.physical.bust')}: {girl.bust_size}</span>
                   </div>
                 )}
                 {girl.body_type && (
                   <div className="flex items-center text-gray-300">
                     <User className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Typ: {girl.body_type}</span>
+                    <span>{t('profile.physical.build.label')}: {girl.body_type}</span>
                   </div>
                 )}
                 {girl.clothing_size && (
                   <div className="flex items-center text-gray-300">
                     <ShoppingBag className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Konfektionsgröße: {girl.clothing_size}</span>
+                    <span>{t('profile.physical.clothing')}: {girl.clothing_size}</span>
                   </div>
                 )}
                 {girl.shoe_size && (
                   <div className="flex items-center text-gray-300">
                     <User className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Schuhgröße: {girl.shoe_size}</span>
+                    <span>{t('profile.physical.shoe')}: {girl.shoe_size}</span>
                   </div>
                 )}
                 {girl.hair && (
                   <div className="flex items-center text-gray-300">
                     <Sparkles className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Haare: {girl.hair}</span>
+                    <span>{t('profile.physical.hair.label')}: {girl.hair}</span>
                   </div>
                 )}
                 {girl.eyes && (
                   <div className="flex items-center text-gray-300">
                     <Eye className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Augen: {girl.eyes}</span>
+                    <span>{t('profile.physical.eyes.label')}: {girl.eyes}</span>
                   </div>
                 )}
                 {girl.skin && (
                   <div className="flex items-center text-gray-300">
                     <Sun className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Haut: {girl.skin}</span>
+                    <span>{t('profile.physical.skin')}: {girl.skin}</span>
                   </div>
                 )}
                 {girl.intimate_area && (
                   <div className="flex items-center text-gray-300">
                     <User className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Intimbereich: {girl.intimate_area}</span>
+                    <span>{t('profile.physical.intimate')}: {girl.intimate_area}</span>
                   </div>
                 )}
                 {girl.body_jewelry && (
                   <div className="flex items-center text-gray-300">
                     <Sparkles className="w-5 h-5 mr-3 text-rose-400" />
-                    <span>Körperschmuck: {girl.body_jewelry}</span>
+                    <span>{t('profile.physical.jewelry')}: {girl.body_jewelry}</span>
                   </div>
                 )}
               </div>
@@ -201,17 +203,17 @@ const ProfileView = () => {
 
             {/* Description */}
             <CardHover intensity="medium" className="bg-gray-800 border border-rose-900/30 rounded-xl p-6">
-              <h2 className="text-xl font-bold text-white mb-4">Beschreibung</h2>
-              <p className="text-gray-300 leading-relaxed">{girl.description ?? 'Beschreibung kommt bald.'}</p>
+              <h2 className="text-xl font-bold text-white mb-4">{t('profile.personal.about')}</h2>
+              <p className="text-gray-300 leading-relaxed">{girl.description ?? t('profile.description.default')}</p>
             </CardHover>
 
             {/* Services & Options */}
             <CardHover intensity="medium" className="bg-gray-800 border border-rose-900/30 rounded-xl p-6">
-              <h2 className="text-xl font-bold text-white mb-4">Services & Optionen</h2>
+              <h2 className="text-xl font-bold text-white mb-4">{t('profile.services.title')}</h2>
               <div className="space-y-4">
                 {girl.intercourse_options && girl.intercourse_options.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-rose-300 mb-2">Verkehr</h3>
+                    <h3 className="text-sm font-semibold text-rose-300 mb-2">{t('profile.services.intercourse')}</h3>
                     <div className="flex flex-wrap gap-2">
                       {girl.intercourse_options.map((option: string, idx: number) => (
                         <span
@@ -227,7 +229,7 @@ const ProfileView = () => {
                 
                 {girl.services_for && girl.services_for.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-rose-300 mb-2">Service für</h3>
+                    <h3 className="text-sm font-semibold text-rose-300 mb-2">{t('profile.services.for')}</h3>
                     <div className="flex flex-wrap gap-2">
                       {girl.services_for.map((service: string, idx: number) => (
                         <span
@@ -243,7 +245,7 @@ const ProfileView = () => {
                 
                 {girl.services && girl.services.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-rose-300 mb-2">Services</h3>
+                    <h3 className="text-sm font-semibold text-rose-300 mb-2">{t('profile.services.services')}</h3>
                     <div className="flex flex-wrap gap-2">
                       {girl.services.map((service: string, idx: number) => (
                         <span
@@ -259,7 +261,7 @@ const ProfileView = () => {
                 
                 {girl.massages && girl.massages.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-rose-300 mb-2">Massagen</h3>
+                    <h3 className="text-sm font-semibold text-rose-300 mb-2">{t('profile.services.massages')}</h3>
                     <div className="flex flex-wrap gap-2">
                       {girl.massages.map((massage: string, idx: number) => (
                         <span
@@ -275,7 +277,7 @@ const ProfileView = () => {
                 
                 {girl.meetings && girl.meetings.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-rose-300 mb-2">Treffen</h3>
+                    <h3 className="text-sm font-semibold text-rose-300 mb-2">{t('profile.services.meetings')}</h3>
                     <div className="flex flex-wrap gap-2">
                       {girl.meetings.map((meeting: string, idx: number) => (
                         <span
@@ -292,7 +294,7 @@ const ProfileView = () => {
                 {/* Legacy specialties field */}
                 {girl.specialties && girl.specialties.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-rose-300 mb-2">Spezialitäten</h3>
+                    <h3 className="text-sm font-semibold text-rose-300 mb-2">{t('profile.services.specialties')}</h3>
                     <div className="flex flex-wrap gap-2">
                       {(Array.isArray(girl.specialties) ? girl.specialties : []).map((specialty: string, idx: number) => (
                         <span
@@ -311,7 +313,7 @@ const ProfileView = () => {
             {/* Schedule */}
             {girl.schedule && (
               <CardHover intensity="medium" className="bg-gray-800 border border-rose-900/30 rounded-xl p-6">
-                <h2 className="text-xl font-bold text-white mb-4">Arbeitszeiten</h2>
+                <h2 className="text-xl font-bold text-white mb-4">{t('profile.availability.title')}</h2>
                 <div className="text-gray-300 whitespace-pre-line">{girl.schedule}</div>
               </CardHover>
             )}
@@ -319,7 +321,7 @@ const ProfileView = () => {
             {/* Additional Info */}
             {girl.additional_info && (
               <CardHover intensity="medium" className="bg-gray-800 border border-rose-900/30 rounded-xl p-6">
-                <h2 className="text-xl font-bold text-white mb-4">Zusätzliche Informationen</h2>
+                <h2 className="text-xl font-bold text-white mb-4">{t('profile.additional.title')}</h2>
                 <div className="text-gray-300 whitespace-pre-line">{girl.additional_info}</div>
               </CardHover>
             )}
@@ -327,7 +329,7 @@ const ProfileView = () => {
             {/* Other Information */}
             {girl.other && (
               <CardHover intensity="medium" className="bg-gray-800 border border-rose-900/30 rounded-xl p-6">
-                <h2 className="text-xl font-bold text-white mb-4">Weitere Informationen</h2>
+                <h2 className="text-xl font-bold text-white mb-4">{t('profile.other.title')}</h2>
                 <div className="flex items-center text-gray-300">
                   <Info className="w-5 h-5 mr-3 text-rose-400" />
                   <span>{girl.other}</span>
@@ -344,7 +346,7 @@ const ProfileView = () => {
                   >
                     <Button className="w-full bg-rose-600 hover:bg-rose-700 text-white py-3 text-lg font-semibold">
                       <Heart className="w-5 h-5 mr-2" />
-                      Jetzt buchen
+                      {t('profile.actions.book')}
                     </Button>
                   </Link>
                 )}
@@ -353,7 +355,7 @@ const ProfileView = () => {
                 className="flex-1 border-rose-600 text-rose-400 hover:bg-rose-600 hover:text-white py-3 text-lg"
                 onClick={() => navigate(-1)}
               >
-                Zurück zur Übersicht
+                {t('profile.back')}
               </Button>
             </div>
           </div>

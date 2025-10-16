@@ -1,117 +1,107 @@
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 const AGB = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-gray-800 rounded-lg shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-white mb-8">Allgemeine Geschäftsbedingungen</h1>
+          <h1 className="text-4xl font-bold text-white mb-8">{t('agb.title')}</h1>
           
           <div className="prose prose-invert max-w-none">
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 1 Geltungsbereich</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.1.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Diese Allgemeinen Geschäftsbedingungen gelten für alle Dienstleistungen, die über diese Website 
-                angeboten werden. Mit der Nutzung unserer Dienstleistungen erkennen Sie diese AGB als verbindlich an.
+                {t('agb.section.1.content')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 2 Vertragspartner</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.2.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Vertragspartner für alle über diese Website angebotenen Dienstleistungen ist:
+                {t('agb.section.2.content')}
               </p>
               <div className="text-gray-300 space-y-2 ml-4">
-                <p>Max Mustermann</p>
-                <p>Musterstraße 123</p>
-                <p>12345 Musterstadt</p>
-                <p>Deutschland</p>
-                <p>E-Mail: info@example.com</p>
+                <p>{t('agb.section.2.company')}</p>
+                <p>{t('agb.section.2.address')}</p>
+                <p>{t('agb.section.2.city')}</p>
+                <p>{t('agb.section.2.country')}</p>
+                <p>{t('agb.section.2.email')}</p>
               </div>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 3 Leistungen</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.3.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Wir bieten Wellness- und Entspannungsdienstleistungen an. Alle angebotenen Dienstleistungen 
-                erfolgen ausschließlich zu Wellness- und Entspannungszwecken.
+                {t('agb.section.3.content1')}
               </p>
               <p className="text-gray-300 mb-4">
-                Die konkreten Leistungen ergeben sich aus der jeweiligen Beschreibung auf unserer Website.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 4 Vertragsschluss</h2>
-              <p className="text-gray-300 mb-4">
-                Ein Vertrag kommt durch die Annahme unseres Angebots durch den Kunden zustande. Die Annahme 
-                kann schriftlich, mündlich oder durch konkludentes Handeln erfolgen.
-              </p>
-              <p className="text-gray-300 mb-4">
-                Wir behalten uns das Recht vor, Angebote ohne Angabe von Gründen abzulehnen.
+                {t('agb.section.3.content2')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 5 Preise und Zahlung</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.4.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Die Preise ergeben sich aus der jeweiligen Leistungsbeschreibung. Alle Preise verstehen sich 
-                inklusive der gesetzlichen Mehrwertsteuer.
+                {t('agb.section.4.content1')}
               </p>
               <p className="text-gray-300 mb-4">
-                Die Zahlung erfolgt in der Regel vor Erbringung der Leistung. Wir akzeptieren Barzahlung 
-                und andere nach Absprache vereinbarte Zahlungsarten.
+                {t('agb.section.4.content2')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 6 Termine und Stornierung</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.5.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Termine sind verbindlich. Bei Nichterscheinen oder verspäteter Stornierung (weniger als 24 Stunden 
-                vor dem Termin) behalten wir uns vor, eine Ausfallgebühr in Höhe von 50% des vereinbarten Preises 
-                zu berechnen.
+                {t('agb.section.5.content1')}
+              </p>
+              <p className="text-gray-300 mb-4">
+                {t('agb.section.5.content2')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 7 Haftung</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.6.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Wir haften nur für Vorsatz und grobe Fahrlässigkeit, soweit nicht zwingende gesetzliche 
-                Haftungsbestimmungen entgegenstehen.
-              </p>
-              <p className="text-gray-300 mb-4">
-                Die Haftung für leichte Fahrlässigkeit ist ausgeschlossen, es sei denn, es werden wesentliche 
-                Vertragspflichten verletzt.
+                {t('agb.section.6.content')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 8 Datenschutz</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.7.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Der Schutz Ihrer persönlichen Daten ist uns wichtig. Informationen zum Umgang mit Ihren Daten 
-                finden Sie in unserer Datenschutzerklärung.
+                {t('agb.section.7.content1')}
+              </p>
+              <p className="text-gray-300 mb-4">
+                {t('agb.section.7.content2')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 9 Schlussbestimmungen</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.8.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, bleibt die Wirksamkeit 
-                der übrigen Bestimmungen unberührt.
-              </p>
-              <p className="text-gray-300 mb-4">
-                Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts.
-              </p>
-              <p className="text-gray-300 mb-4">
-                Gerichtsstand ist unser Geschäftssitz, sofern der Kunde Kaufmann, juristische Person des 
-                öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen ist.
+                {t('agb.section.8.content')}
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-rose-400 mb-4">§ 10 Kontakt</h2>
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.9.title')}</h2>
               <p className="text-gray-300 mb-4">
-                Bei Fragen zu diesen AGB können Sie uns jederzeit unter den im Impressum angegebenen 
-                Kontaktdaten erreichen.
+                {t('agb.section.9.content1')}
+              </p>
+              <p className="text-gray-300 mb-4">
+                {t('agb.section.9.content2')}
+              </p>
+              <p className="text-gray-300 mb-4">
+                {t('agb.section.9.content3')}
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-rose-400 mb-4">{t('agb.section.10.title')}</h2>
+              <p className="text-gray-300 mb-4">
+                {t('agb.section.10.content')}
               </p>
             </section>
           </div>

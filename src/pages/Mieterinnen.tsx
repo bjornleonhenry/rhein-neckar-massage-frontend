@@ -60,7 +60,7 @@ const Mieterinnen = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {girls.map((girl: any, index: number) => (
               <div
                 key={index}
@@ -77,7 +77,7 @@ const Mieterinnen = () => {
                   <img
                     src={girl.image}
                     alt=""
-                    className="w-full h-100 object-cover"
+                    className="w-full h-80 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                   {/* Removed Verfügbar/Beschäftigt badge */}

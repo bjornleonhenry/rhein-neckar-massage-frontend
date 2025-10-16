@@ -52,7 +52,7 @@ const ProfileView = () => {
                 <img
                   src={displayMainImage || '/assets/default-profile.jpg'}
                   alt={girl.name ?? 'Profilbild'}
-                  className="w-full h-[900px] object-cover"
+                  className="w-full h-[100%] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6">

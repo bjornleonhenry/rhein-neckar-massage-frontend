@@ -44,7 +44,8 @@ const Ambiente = () => {
   const { data, loading, error } = useFetch<{ data: Ambient[] }>(API.ambients);
   const { t } = useTranslation();
 
-  const rooms = data?.data || [];
+  // Filter to only show active ambients
+  const rooms = (data?.data || []).filter(ambient => ambient.is_active === true);
 
   const amenities = [
     { icon: <Shield className="w-6 h-6" />, title: t('ambiente.amenities.discretion.title'), description: t('ambiente.amenities.discretion.description') },

@@ -207,29 +207,35 @@ const Leistungen = () => {
     }
   };
 
-  const services = Array.isArray(angebots) ? angebots.map(angebot => {
-    // tolerate backend field naming differences (snake_case vs camelCase)
-    const durationVal = (angebot as any).duration_minutes ?? (angebot as any).durationMinutes ?? null;
-    const isActiveVal = (angebot as any).is_active ?? (angebot as any).isActive ?? false;
-    let featuresVal: string[] = [];
-    if (Array.isArray((angebot as any).services)) {
-      featuresVal = (angebot as any).services;
-    } else if (typeof (angebot as any).services === 'string' && (angebot as any).services.trim() !== '') {
-      // some endpoints return a string; try to split by commas or fallback to the whole string
-      featuresVal = (angebot as any).services.split(',').map((s: string) => s.trim()).filter(Boolean);
-    }
+  const services = Array.isArray(angebots) ? angebots
+    .filter(angebot => {
+      // Only show active angebots
+      const isActiveVal = (angebot as any).is_active ?? (angebot as any).isActive ?? false;
+      return isActiveVal === true;
+    })
+    .map(angebot => {
+      // tolerate backend field naming differences (snake_case vs camelCase)
+      const durationVal = (angebot as any).duration_minutes ?? (angebot as any).durationMinutes ?? null;
+      const isActiveVal = (angebot as any).is_active ?? (angebot as any).isActive ?? false;
+      let featuresVal: string[] = [];
+      if (Array.isArray((angebot as any).services)) {
+        featuresVal = (angebot as any).services;
+      } else if (typeof (angebot as any).services === 'string' && (angebot as any).services.trim() !== '') {
+        // some endpoints return a string; try to split by commas or fallback to the whole string
+        featuresVal = (angebot as any).services.split(',').map((s: string) => s.trim()).filter(Boolean);
+      }
 
-    return {
-      icon: getIcon(angebot.category ?? ''),
-      title: angebot.title,
-      description: angebot.description,
-      duration: durationVal !== null && durationVal !== undefined ? `${durationVal} ${t('angebot.duration')}` : '',
-      price: `${angebot.price}€`,
-      features: featuresVal,
-      popular: isActiveVal,
-      id: angebot.id
-    };
-  }) : [];
+      return {
+        icon: getIcon(angebot.category ?? ''),
+        title: angebot.title,
+        description: angebot.description,
+        duration: durationVal !== null && durationVal !== undefined ? `${durationVal} ${t('angebot.duration')}` : '',
+        price: `${angebot.price}€`,
+        features: featuresVal,
+        popular: isActiveVal,
+        id: angebot.id
+      };
+    }) : [];
 
   const additionalServices = [
     t('angebot.additional_services.1'),

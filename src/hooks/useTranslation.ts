@@ -32,6 +32,16 @@ const defaultTranslations: Translations = {
   'common.loading': { de: 'Lädt...', en: 'Loading...' },
   'common.error': { de: 'Fehler', en: 'Error' },
   'common.notFound': { de: 'Nicht gefunden', en: 'Not found' },
+  'common.back': { de: 'Zurück', en: 'Back' },
+  'common.back_to_overview': { de: 'Zurück zur Übersicht', en: 'Back to overview' },
+  
+  // Ambiente errors
+  'ambiente.error.not_found': { de: 'Raum nicht gefunden', en: 'Room not found' },
+  'ambiente.error.load': { de: 'Fehler beim Laden', en: 'Error loading' },
+  
+  // Angebot errors
+  'angebot.error.not_found': { de: 'Service nicht gefunden', en: 'Service not found' },
+  'angebot.error.load': { de: 'Fehler beim Laden', en: 'Error loading' },
 };
 
 export const useTranslation = () => {

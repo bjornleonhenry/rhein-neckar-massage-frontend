@@ -116,7 +116,7 @@ const Ambiente = () => {
                 key={room.id || index} 
                 className="bg-gray-900 border border-rose-900/30 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105 group hover:border-rose-600/50 flex flex-col"
               >
-                <div className="relative">
+                <Link to={`/ambiente/${room.id}`} className="relative block cursor-pointer">
                   <img
                     src={room.image || '/placeholder-room.jpg'}
                     alt={room.name}
@@ -127,29 +127,45 @@ const Ambiente = () => {
                     <h3 className="text-xl font-bold text-white">{room.name}</h3>
                     <p className="text-rose-300 text-sm">{room.size || 'N/A'} • {room.capacity} {room.capacity === 1 ? t('ambiente.capacity.person') : t('ambiente.capacity.persons')}</p>
                   </div>
-                </div>
+                  <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-xs">
+                    {t('ambiente.view_details') || 'Details ansehen'}
+                  </div>
+                </Link>
                 
                 <div className="p-6 flex-1 flex flex-col">
-                  <p className="text-gray-300 mb-4 leading-relaxed">{room.description}</p>
+                  <p className="text-gray-300 mb-4 leading-relaxed line-clamp-3">{room.description}</p>
                   
                   <div className="mb-4 flex-1">
                     <h4 className="text-white font-semibold mb-2">{t('ambiente.equipment.title')}</h4>
                     <div className="space-y-1">
-                      {parseFeatures(room.features).map((feature: string, idx: number) => (
+                      {parseFeatures(room.features).slice(0, 4).map((feature: string, idx: number) => (
                         <div key={idx} className="flex items-center text-sm text-gray-300">
                           <div className="w-2 h-2 bg-rose-400 rounded-full mr-2"></div>
                           {feature}
                         </div>
                       ))}
+                      {parseFeatures(room.features).length > 4 && (
+                        <Link to={`/ambiente/${room.id}`} className="text-sm text-rose-400 hover:text-rose-300 ml-4">
+                          +{parseFeatures(room.features).length - 4} {t('ambiente.more') || 'weitere'}
+                        </Link>
+                      )}
                     </div>
                   </div>
                   
-                  <Link 
-                    to="/buchen" 
-                    className="w-full bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors text-center block mt-auto"
-                  >
-                    {t('ambiente.reserve_room')}
-                  </Link>
+                  <div className="grid grid-cols-2 gap-2 mt-auto">
+                    <Link 
+                      to={`/ambiente/${room.id}`}
+                      className="w-full bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors text-center block text-sm"
+                    >
+                      {t('ambiente.details') || 'Details'}
+                    </Link>
+                    <Link 
+                      to="/buchen" 
+                      className="w-full bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors text-center block text-sm"
+                    >
+                      {t('ambiente.reserve_room') || 'Buchen'}
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}

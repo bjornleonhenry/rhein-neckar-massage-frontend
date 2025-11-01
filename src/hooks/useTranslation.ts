@@ -16,16 +16,16 @@ const defaultTranslations: Translations = {
 
   // Footer
   'footer.brand': {
-    de: 'Paygirls Massage Heidelberg',
-    en: 'Paygirls Massage Heidelberg'
+    de: 'Rhein Neckar Massage Heidelberg',
+    en: 'Rhein Neckar Massage Heidelberg'
   },
   'footer.description': {
     de: 'Ihr exklusives Erotik-Massage Studio in Heidelberg. Sinnliche Entspannung in eleganter, diskreter Atmosphäre. Höchste Qualität und absolute Diskretion sind unsere Priorität.',
     en: 'Your exclusive erotic massage studio in Heidelberg. Sensual relaxation in elegant, discreet atmosphere. Highest quality and absolute discretion are our priority.'
   },
   'footer.copyright': {
-    de: '© 2025 Paygirls Massage. Alle Rechte vorbehalten.',
-    en: '© 2025 Paygirls Massage. All rights reserved.'
+    de: '© 2025 Rhein Neckar Massage. Alle Rechte vorbehalten.',
+    en: '© 2025 Rhein Neckar Massage. All rights reserved.'
   },
 
   // Common

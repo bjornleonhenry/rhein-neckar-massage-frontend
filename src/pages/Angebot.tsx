@@ -493,16 +493,18 @@ const Leistungen = () => {
                         </motion.div>
                       </motion.div>
 
-                      <motion.h3
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                        viewport={{ once: true }}
-                        whileHover={{ scale: 1.05 }}
-                        className="text-xl font-semibold text-white mb-3 cursor-pointer"
-                      >
-                        {service.title}
-                      </motion.h3>
+                      <Link to={`/angebot/${service.id}`}>
+                        <motion.h3
+                          initial={{ opacity: 0, y: 10 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
+                          viewport={{ once: true }}
+                          whileHover={{ scale: 1.05 }}
+                          className="text-xl font-semibold text-white mb-3 cursor-pointer hover:text-rose-300 transition-colors"
+                        >
+                          {service.title}
+                        </motion.h3>
+                      </Link>
                       <motion.p
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -570,12 +572,17 @@ const Leistungen = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 1.6 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="mt-4"
+                        className="mt-4 grid grid-cols-2 gap-2"
                       >
-                          <Link to="/buchen" className="w-full md:w-1/2 lg:w-1/4">
-                        <ButtonHover className="w-full py-2 rounded-lg text-sm">
-                          {t('angebot.book_now')}
-                        </ButtonHover>
+                        <Link to={`/angebot/${service.id}`} className="w-full">
+                          <ButtonHover className="w-full py-2 rounded-lg text-sm bg-gray-700 hover:bg-gray-600">
+                            {t('angebot.details') || 'Details'}
+                          </ButtonHover>
+                        </Link>
+                        <Link to="/buchen" className="w-full">
+                          <ButtonHover className="w-full py-2 rounded-lg text-sm">
+                            {t('angebot.book_now')}
+                          </ButtonHover>
                         </Link>
                       </motion.div>
                     </motion.div>

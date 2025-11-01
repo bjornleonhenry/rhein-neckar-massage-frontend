@@ -7,7 +7,9 @@ import Home from './pages/Home';
 import Mieterinnen from './pages/Mieterinnen';
 import Escorts from './pages/Escorts';
 import Ambiente from './pages/Ambiente';
+import AmbienteDetail from './pages/AmbienteDetail';
 import Angebot from './pages/Angebot';
+import AngebotDetail from './pages/AngebotDetail';
 import Leistungen from './pages/Leistungen';
 import Gaestebuch from './pages/Gaestebuch';
 import Kontakt from './pages/Kontakt';
@@ -36,8 +38,10 @@ function AppContent() {
           <Route path="/mieterinnen/:id" element={<ProfileView />} />
           <Route path="/escorts" element={<Escorts />} />
           <Route path="/ambiente" element={<Ambiente />} />
+          <Route path="/ambiente/:id" element={<AmbienteDetail />} />
           <Route path="/angebot" element={<Angebot />} />
-          <Route path="/angebot" element={<Leistungen />} />
+          <Route path="/angebot/:id" element={<AngebotDetail />} />
+          <Route path="/leistungen" element={<Leistungen />} />
           <Route path="/gaestebuch" element={<Gaestebuch />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/jobs" element={<Jobs />} />

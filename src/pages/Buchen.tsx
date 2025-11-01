@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Calendar, Clock, User, Heart, Star, Phone, Mail, ArrowLeft, Check } from 'lucide-react';
+import { Heart, ArrowLeft, Check } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+
+interface Girl {
+  name: string;
+  specialties: string[];
+  available: boolean;
+}
+
+interface Service {
+  name: string;
+  duration: string;
+  price: string;
+}
 
 const Buchen = () => {
   const [searchParams] = useSearchParams();
@@ -23,28 +35,79 @@ const Buchen = () => {
 
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [girls, setGirls] = useState<Girl[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const girls = [
-    { name: "Lila", specialties: ["Tantra", "Thai Massage", "Entspannung"], available: true },
-    { name: "Maya", specialties: ["Erotik Massage", "Öl Massage", "VIP Service"], available: true },
-    { name: "Nira", specialties: ["Paar Massage", "Wellness", "Entspannung"], available: false },
-    { name: "Kira", specialties: ["Tantra", "Meditation", "Spirituell"], available: true },
-    { name: "Siri", specialties: ["Hot Stone", "Deep Tissue", "Reflexologie"], available: true },
-    { name: "Ploy", specialties: ["Erotik Massage", "Körperbehandlung", "Intimität"], available: true },
-    { name: "Anya", specialties: ["VIP Service", "Luxus Behandlung", "Diskretion"], available: false },
-    { name: "Nin", specialties: ["Aromatherapie", "Entspannung", "Wellness"], available: true }
-  ];
+  // Fetch active profiles and angebots from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch active profiles
+        const profilesResponse = await fetch(`${import.meta.env.VITE_API_BASE}/profiles`);
+        if (profilesResponse.ok) {
+          const profilesData = await profilesResponse.json();
+          const profilesList = profilesData.data || [];
+          
+          setGirls(profilesList.map((p: { name: string; services?: string | string[]; massages?: string | string[]; active?: boolean }) => {
+            // Parse services and massages if they are JSON strings
+            let servicesList: string[] = [];
+            let massagesList: string[] = [];
+            
+            if (typeof p.services === 'string') {
+              try {
+                servicesList = JSON.parse(p.services);
+              } catch {
+                servicesList = [];
+              }
+            } else if (Array.isArray(p.services)) {
+              servicesList = p.services;
+            }
+            
+            if (typeof p.massages === 'string') {
+              try {
+                massagesList = JSON.parse(p.massages);
+              } catch {
+                massagesList = [];
+              }
+            } else if (Array.isArray(p.massages)) {
+              massagesList = p.massages;
+            }
+            
+            return {
+              name: p.name,
+              specialties: [...servicesList, ...massagesList].slice(0, 3), // Show first 3 specialties
+              available: p.active !== false
+            };
+          }));
+        }
 
-  const services = [
-    { name: "Erotik Massage", duration: "60-90 Min", price: "ab 150€" },
-    { name: "Tantra Massage", duration: "90-120 Min", price: "ab 200€" },
-    { name: "VIP Service", duration: "120-180 Min", price: "ab 300€" },
-    { name: "Paar Erlebnis", duration: "90-150 Min", price: "ab 350€" },
-    { name: "Body-to-Body", duration: "60-90 Min", price: "ab 180€" },
-    { name: "Girlfriend Experience", duration: "120-240 Min", price: "ab 400€" },
-    { name: "Thai Massage", duration: "60-90 Min", price: "ab 120€" },
-    { name: "Öl Massage", duration: "60-90 Min", price: "ab 140€" }
-  ];
+        // Fetch active angebots
+        const angebotResponse = await fetch(`${import.meta.env.VITE_API_BASE}/angebots`);
+        if (angebotResponse.ok) {
+          const angebotData = await angebotResponse.json();
+          const angebotList = angebotData.data || [];
+          
+          setServices(angebotList.map((a: { title: string; duration_minutes?: number; price?: number }) => ({
+            name: a.title,
+            duration: a.duration_minutes ? `${a.duration_minutes} Min` : '',
+            price: a.price ? `${a.price}€` : ''
+          })));
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Set default fallback data
+        setGirls([]);
+        setServices([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const timeSlots = [
     "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", 
@@ -171,53 +234,58 @@ const Buchen = () => {
           </div>
 
           <div className="bg-gray-900 border border-rose-900/30 rounded-xl p-8">
-            <form onSubmit={handleSubmit}>
-              {/* Step 1: Service Selection */}
-              {step === 1 && (
-                <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">{t('buchen.step1.title')}</h2>
-                  
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-3">
-                        {t('buchen.step1.girl_label')}
-                      </label>
-                      <select
-                        name="girl"
-                        value={bookingData.girl}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
-                        required
-                      >
-                        <option value="">{t('buchen.select.placeholder')}</option>
-                        {girls.filter(girl => girl.available).map((girl, idx) => (
-                          <option key={idx} value={girl.name}>
-                            {girl.name} - {Array.isArray(girl.specialties) ? girl.specialties.join(', ') : (girl.specialties || 'Massage')}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+            {loading ? (
+              <div className="text-center py-12">
+                <p className="text-gray-300">{t('common.loading') || 'Laden...'}</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                {/* Step 1: Service Selection */}
+                {step === 1 && (
+                  <div>
+                    <h2 className="text-2xl font-bold text-white mb-6">{t('buchen.step1.title')}</h2>
+                    
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-3">
+                          {t('buchen.step1.girl_label')}
+                        </label>
+                        <select
+                          name="girl"
+                          value={bookingData.girl}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
+                          required
+                        >
+                          <option value="">{t('buchen.select.placeholder')}</option>
+                          {girls.filter(girl => girl.available).map((girl, idx) => (
+                            <option key={idx} value={girl.name}>
+                              {girl.name} - {Array.isArray(girl.specialties) ? girl.specialties.join(', ') : (girl.specialties || 'Massage')}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-3">
-                        {t('buchen.step1.service_label')}
-                      </label>
-                      <select
-                        name="service"
-                        value={bookingData.service}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
-                        required
-                      >
-                        <option value="">{t('buchen.select.placeholder')}</option>
-                        {services.map((service, idx) => (
-                          <option key={idx} value={service.name}>
-                            {service.name} - {service.duration} - {service.price}
-                          </option>
-                        ))}
-                      </select>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-3">
+                          {t('buchen.step1.service_label')}
+                        </label>
+                        <select
+                          name="service"
+                          value={bookingData.service}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all bg-gray-700 text-white"
+                          required
+                        >
+                          <option value="">{t('buchen.select.placeholder')}</option>
+                          {services.map((service, idx) => (
+                            <option key={idx} value={service.name}>
+                              {service.name} - {service.duration} - {service.price}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-                  </div>
 
                   <div className="mt-8 flex justify-end">
                     <button
@@ -404,6 +472,7 @@ const Buchen = () => {
                 </div>
               )}
             </form>
+            )}
           </div>
         </div>
       </section>

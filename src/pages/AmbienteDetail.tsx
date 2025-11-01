@@ -197,7 +197,7 @@ const AmbienteDetail = () => {
                   )}
                   <div className="flex items-center text-gray-300">
                     <Star className="w-5 h-5 mr-2 text-rose-400 fill-rose-400" />
-                    {ambient.rating.toFixed(1)}
+                    {typeof ambient.rating === 'number' ? ambient.rating.toFixed(1) : '0.0'}
                   </div>
                 </div>
 

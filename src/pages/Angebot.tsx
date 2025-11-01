@@ -432,7 +432,7 @@ const Leistungen = () => {
                         scale: 1.01,
                         transition: { duration: 0.3 }
                       }}
-                      className={`bg-gray-900 border rounded-xl p-6 shadow-lg group relative flex flex-col h-full min-h-[420px] max-h-[420px] transform-gpu backface-hidden will-change-transform ${
+                      className={`bg-gray-900 border rounded-xl p-6 shadow-lg group relative flex flex-col h-full min-h-[480px] max-h-[480px] transform-gpu backface-hidden will-change-transform ${
                         service.popular
                           ? 'border-rose-600/50 hover:border-rose-500'
                           : 'border-rose-900/30 hover:border-rose-600/50'
@@ -508,8 +508,8 @@ const Leistungen = () => {
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="text-gray-300 mb-4 leading-relaxed text-sm max-h-12 min-h-[3rem] overflow-hidden text-ellipsis line-clamp-2"
-                        style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}
+                        className="text-gray-300 mb-4 leading-relaxed text-sm max-h-24 min-h-[6rem] overflow-hidden text-ellipsis line-clamp-4"
+                        style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}
                       >
                         {service.description}
                       </motion.p>

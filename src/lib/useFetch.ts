@@ -6,9 +6,24 @@ type FetchState<T> = {
   error: Error | null;
 };
 
-// Default API base; can be overridden via Vite env var VITE_API_BASE
-// Use Vite env var for API base, fallback to local dev
-const API_BASE = (import.meta as any).env?.VITE_API_BASE;
+// Helper to resolve API base at runtime
+const getApiBase = () => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const buildTime = (import.meta as any).env?.VITE_API_BASE as string | undefined;
+    if (buildTime && buildTime !== 'undefined') return buildTime.replace(/\/$/, '');
+  } catch {
+    // ignore
+  }
+  // Allow injecting at runtime via a global
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const runtime = (window as any).__API_BASE || (window as any).__RUNTIME_CONFIG?.VITE_API_BASE;
+  if (runtime) return String(runtime).replace(/\/$/, '');
+  // Fallback to same-origin /api
+  return `${window.location.origin.replace(/\/$/, '')}/api`;
+};
+
+const API_BASE = getApiBase();
 
 export const API = {
   base: API_BASE,
@@ -22,6 +37,7 @@ function joinUrl(base: string, path: string) {
   return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useFetch<T = any>(url: string, init?: RequestInit) {
   const [state, setState] = useState<FetchState<T>>({ data: null, loading: true, error: null });
 
@@ -37,12 +53,13 @@ export function useFetch<T = any>(url: string, init?: RequestInit) {
         return res.json();
       })
       .then((data: T) => setState({ data, loading: false, error: null }))
-      .catch((err: any) => {
-        if (err?.name === 'AbortError') return;
+      .catch((err: unknown) => {
+        if (err && typeof err === 'object' && 'name' in err && err.name === 'AbortError') return;
         setState({ data: null, loading: false, error: err instanceof Error ? err : new Error(String(err)) });
       });
 
     return () => controller.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   return state;

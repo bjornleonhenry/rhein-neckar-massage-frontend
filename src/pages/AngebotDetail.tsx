@@ -43,10 +43,28 @@ const AngebotDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Helper to resolve API base at runtime
+  const getApiBase = () => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const buildTime = (import.meta as any).env?.VITE_API_BASE as string | undefined;
+      if (buildTime && buildTime !== 'undefined') return buildTime.replace(/\/$/, '');
+    } catch {
+      // ignore
+    }
+    // Allow injecting at runtime via a global
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const runtime = (window as any).__API_BASE || (window as any).__RUNTIME_CONFIG?.VITE_API_BASE;
+    if (runtime) return String(runtime).replace(/\/$/, '');
+    // Fallback to same-origin /api
+    return `${window.location.origin.replace(/\/$/, '')}/api`;
+  };
+
   useEffect(() => {
     const fetchAngebots = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE}/angebots`);
+        const apiBase = getApiBase();
+        const response = await fetch(`${apiBase}/angebots`);
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         setAngebots(data.data || []);

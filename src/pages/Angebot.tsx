@@ -91,7 +91,7 @@ const Leistungen = () => {
         setApiLoading(true);
         setApiError(null);
 
-  const response = await fetch(API_ANGEBOTS);
+  const response = await fetch(`${API_ANGEBOTS}?per_page=100`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

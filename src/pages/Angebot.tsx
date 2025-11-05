@@ -500,7 +500,7 @@ const Leistungen = () => {
                           transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
                           viewport={{ once: true }}
                           whileHover={{ scale: 1.05 }}
-                          className="text-xl font-semibold text-white mb-3 cursor-pointer hover:text-rose-300 transition-colors h-16 flex items-center"
+                          className="text-xl font-semibold text-white mb-3 cursor-pointer hover:text-rose-300 transition-colors h-16 min-h-16 flex items-center"
                         >
                           {service.title}
                         </motion.h3>
@@ -510,7 +510,7 @@ const Leistungen = () => {
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="text-gray-300 mb-4 leading-relaxed text-sm overflow-hidden text-ellipsis h-22"
+                        className="text-gray-300 mb-4 leading-relaxed text-sm overflow-hidden text-ellipsis h-22 min-h-22"
                         style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}
                       >
                         {service.description}
@@ -521,7 +521,7 @@ const Leistungen = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 1.0 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="mb-4 h-32 overflow-hidden"
+                        className="mb-4 h-32 min-h-32 overflow-hidden"
                       >
                         <h4 className="text-white font-semibold mb-2 text-sm">{t('angebot.form.services')}</h4>
                         <div className="space-y-1">
@@ -551,7 +551,7 @@ const Leistungen = () => {
                           whileInView={{ opacity: 1 }}
                           transition={{ duration: 0.6, delay: 1.4 + index * 0.1 }}
                           viewport={{ once: true }}
-                          className="flex justify-between items-center pt-4 border-t border-gray-700 h-10"
+                          className="flex justify-between items-center pt-4 border-t border-gray-700 h-10 min-h-10"
                         >
                           <motion.div
                             whileHover={{ scale: 1.1 }}
@@ -573,7 +573,7 @@ const Leistungen = () => {
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6, delay: 1.6 + index * 0.1 }}
                           viewport={{ once: true }}
-                          className="mt-4 grid grid-cols-2 gap-2 h-10"
+                          className="mt-4 grid grid-cols-2 gap-2 h-10 min-h-10"
                         >
                         <Link to={`/angebot/${service.id}`} className="w-full">
                           <ButtonHover className="w-full py-2 rounded-lg text-sm bg-gray-700 hover:bg-gray-600">

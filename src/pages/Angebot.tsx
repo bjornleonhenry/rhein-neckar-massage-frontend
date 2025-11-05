@@ -510,7 +510,7 @@ const Leistungen = () => {
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="text-gray-300 mb-4 leading-relaxed text-sm overflow-hidden text-ellipsis h-20"
+                        className="text-gray-300 mb-4 leading-relaxed text-sm overflow-hidden text-ellipsis h-22"
                         style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}
                       >
                         {service.description}

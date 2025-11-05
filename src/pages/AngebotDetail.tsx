@@ -4,6 +4,14 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+interface AngebotOption {
+  id: number;
+  title: string;
+  price: number;
+  duration_minutes: number;
+  is_active: boolean;
+}
+
 interface Angebot {
   id: number;
   title: string;
@@ -13,6 +21,7 @@ interface Angebot {
   category: string;
   image?: string;
   services?: string[] | string;
+  options?: AngebotOption[];
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -42,6 +51,7 @@ const AngebotDetail = () => {
   const [angebots, setAngebots] = useState<Angebot[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<AngebotOption | null>(null);
 
   // Helper to resolve API base at runtime
   const getApiBase = () => {
@@ -275,18 +285,73 @@ const AngebotDetail = () => {
                   {t('angebot.book_service') || 'Service buchen'}
                 </h3>
                 
+                {/* Time Options Selection */}
+                {angebot.options && angebot.options.length > 0 && (
+                  <div className="mb-6">
+                    <div className="text-gray-400 text-sm mb-3">{t('angebot.select_duration') || 'Dauer wählen'}</div>
+                    <div className="space-y-2">
+                      {/* Default option */}
+                      <button
+                        onClick={() => setSelectedOption(null)}
+                        className={`w-full p-3 rounded-lg text-left transition-colors ${
+                          selectedOption === null
+                            ? 'bg-rose-600 text-white border-rose-500'
+                            : 'bg-gray-800/50 text-gray-300 border-gray-600 hover:bg-gray-700/50'
+                        } border`}
+                      >
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="font-medium">{t('angebot.standard') || 'Standard'}</div>
+                            <div className="text-sm opacity-75">
+                              {angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-bold">{angebot.price}€</div>
+                          </div>
+                        </div>
+                      </button>
+                      
+                      {/* Option variations */}
+                      {angebot.options.filter(option => option.is_active).map((option) => (
+                        <button
+                          key={option.id}
+                          onClick={() => setSelectedOption(option)}
+                          className={`w-full p-3 rounded-lg text-left transition-colors ${
+                            selectedOption?.id === option.id
+                              ? 'bg-rose-600 text-white border-rose-500'
+                              : 'bg-gray-800/50 text-gray-300 border-gray-600 hover:bg-gray-700/50'
+                          } border`}
+                        >
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <div className="font-medium">{option.title}</div>
+                              <div className="text-sm opacity-75">
+                                {option.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-bold">{option.price}€</div>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-4 mb-6">
                   <div className="bg-gray-800/50 p-4 rounded-lg">
                     <div className="text-gray-400 text-sm mb-1">{t('angebot.duration') || 'Dauer'}</div>
                     <div className="text-white text-lg font-semibold">
-                      {angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                      {selectedOption ? selectedOption.duration_minutes : angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
                     </div>
                   </div>
                   
                   <div className="bg-gray-800/50 p-4 rounded-lg">
                     <div className="text-gray-400 text-sm mb-1">{t('angebot.price') || 'Preis'}</div>
                     <div className="text-rose-400 text-2xl font-bold">
-                      {angebot.price}€
+                      {selectedOption ? selectedOption.price : angebot.price}€
                     </div>
                   </div>
                 </div>

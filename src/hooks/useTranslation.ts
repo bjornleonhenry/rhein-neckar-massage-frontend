@@ -42,6 +42,17 @@ const defaultTranslations: Translations = {
   // Angebot errors
   'angebot.error.not_found': { de: 'Service nicht gefunden', en: 'Service not found' },
   'angebot.error.load': { de: 'Fehler beim Laden', en: 'Error loading' },
+  
+  // Angebot booking
+  'angebot.book_service': { de: 'Service buchen', en: 'Book service' },
+  'angebot.select_duration': { de: 'Dauer wählen', en: 'Select duration' },
+  'angebot.standard': { de: 'Standard', en: 'Standard' },
+  'angebot.duration': { de: 'Dauer', en: 'Duration' },
+  'angebot.price': { de: 'Preis', en: 'Price' },
+  'angebot.minutes': { de: 'Minuten', en: 'minutes' },
+  'angebot.book_description': { de: 'Buchen Sie jetzt Ihr unvergessliches Erlebnis. Diskret und professionell.', en: 'Book your unforgettable experience now. Discreet and professional.' },
+  'angebot.book_now': { de: 'Jetzt buchen', en: 'Book now' },
+  'angebot.booking_note': { de: '100% diskret und sicher', en: '100% discreet and secure' },
 };
 
 export const useTranslation = () => {

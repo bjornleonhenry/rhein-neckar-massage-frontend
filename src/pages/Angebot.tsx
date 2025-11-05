@@ -482,7 +482,7 @@ const Leistungen = () => {
                         whileInView={{ scale: 1 }}
                         transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="bg-rose-900/20 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:bg-rose-800/30 transition-colors"
+                        className="bg-rose-900/20 w-16 h-16 rounded-full items-center justify-center mb-4 group-hover:bg-rose-800/30 transition-colors hidden"
                       >
                         <motion.div
                           whileHover={{ rotate: 360, scale: 1.2 }}

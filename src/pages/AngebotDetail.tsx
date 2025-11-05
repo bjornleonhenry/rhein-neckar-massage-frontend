@@ -64,7 +64,8 @@ const AngebotDetail = () => {
     const fetchAngebots = async () => {
       try {
         const apiBase = getApiBase();
-        const response = await fetch(`${apiBase}/angebots`);
+        // Fetch all angebots by setting a high per_page value
+        const response = await fetch(`${apiBase}/angebots?per_page=100`);
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         setAngebots(data.data || []);

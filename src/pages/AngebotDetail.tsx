@@ -275,102 +275,158 @@ const AngebotDetail = () => {
 
             {/* Sidebar - Booking Card */}
             <div className="lg:col-span-1">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-gray-900 border border-rose-900/30 rounded-xl p-8 sticky top-24"
+                className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border border-rose-900/30 rounded-2xl p-8 sticky top-24 shadow-2xl"
               >
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  {t('angebot.book_service') || 'Service buchen'}
-                </h3>
-                
+                {/* Header */}
+                <div className="text-center mb-8">
+                  <h3 className="text-3xl font-bold text-white mb-2">
+                    {t('angebot.book_service') || 'Service buchen'}
+                  </h3>
+                  <div className="w-16 h-1 bg-rose-500 mx-auto rounded-full"></div>
+                </div>
+
                 {/* Time Options Selection */}
-                {angebot.options && angebot.options.length > 0 && (
-                  <div className="mb-6">
-                    <div className="text-gray-400 text-sm mb-3">{t('angebot.select_duration') || 'Dauer wählen'}</div>
-                    <div className="space-y-2">
+                {angebot.options && angebot.options.length > 0 ? (
+                  <div className="mb-8">
+                    <div className="flex items-center mb-4">
+                      <Clock className="w-5 h-5 text-rose-400 mr-2" />
+                      <span className="text-gray-300 font-medium">{t('angebot.select_duration') || 'Dauer wählen'}</span>
+                    </div>
+
+                    <div className="space-y-3">
                       {/* Default option */}
                       <button
                         onClick={() => setSelectedOption(null)}
-                        className={`w-full p-3 rounded-lg text-left transition-colors ${
+                        className={`w-full p-4 rounded-xl text-left transition-all duration-300 transform hover:scale-[1.02] ${
                           selectedOption === null
-                            ? 'bg-rose-600 text-white border-rose-500'
-                            : 'bg-gray-800/50 text-gray-300 border-gray-600 hover:bg-gray-700/50'
-                        } border`}
+                            ? 'bg-rose-600 text-white border-rose-400 shadow-lg shadow-rose-500/25'
+                            : 'bg-gray-800/70 text-gray-300 border-gray-600 hover:bg-gray-700/70 hover:border-rose-400/50'
+                        } border-2 backdrop-blur-sm`}
                       >
                         <div className="flex justify-between items-center">
-                          <div>
-                            <div className="font-medium">{t('angebot.standard') || 'Standard'}</div>
-                            <div className="text-sm opacity-75">
-                              {angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                          <div className="flex items-center">
+                            <div className={`w-4 h-4 rounded-full border-2 mr-3 ${
+                              selectedOption === null ? 'border-white bg-rose-500' : 'border-gray-500'
+                            }`}>
+                              {selectedOption === null && (
+                                <div className="w-full h-full rounded-full bg-white scale-50"></div>
+                              )}
+                            </div>
+                            <div>
+                              <div className="font-semibold text-lg">{t('angebot.standard') || 'Standard'}</div>
+                              <div className="text-sm opacity-80">
+                                {angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                              </div>
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="font-bold">{angebot.price}€</div>
+                            <div className="text-2xl font-bold">{angebot.price}€</div>
                           </div>
                         </div>
                       </button>
-                      
+
                       {/* Option variations */}
                       {angebot.options.filter(option => option.is_active).map((option) => (
                         <button
                           key={option.id}
                           onClick={() => setSelectedOption(option)}
-                          className={`w-full p-3 rounded-lg text-left transition-colors ${
+                          className={`w-full p-4 rounded-xl text-left transition-all duration-300 transform hover:scale-[1.02] ${
                             selectedOption?.id === option.id
-                              ? 'bg-rose-600 text-white border-rose-500'
-                              : 'bg-gray-800/50 text-gray-300 border-gray-600 hover:bg-gray-700/50'
-                          } border`}
+                              ? 'bg-rose-600 text-white border-rose-400 shadow-lg shadow-rose-500/25'
+                              : 'bg-gray-800/70 text-gray-300 border-gray-600 hover:bg-gray-700/70 hover:border-rose-400/50'
+                          } border-2 backdrop-blur-sm`}
                         >
                           <div className="flex justify-between items-center">
-                            <div>
-                              <div className="font-medium">{option.title}</div>
-                              <div className="text-sm opacity-75">
-                                {option.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                            <div className="flex items-center">
+                              <div className={`w-4 h-4 rounded-full border-2 mr-3 ${
+                                selectedOption?.id === option.id ? 'border-white bg-rose-500' : 'border-gray-500'
+                              }`}>
+                                {selectedOption?.id === option.id && (
+                                  <div className="w-full h-full rounded-full bg-white scale-50"></div>
+                                )}
+                              </div>
+                              <div>
+                                <div className="font-semibold text-lg">{option.title}</div>
+                                <div className="text-sm opacity-80">
+                                  {option.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                                </div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="font-bold">{option.price}€</div>
+                              <div className="text-2xl font-bold">{option.price}€</div>
                             </div>
                           </div>
                         </button>
                       ))}
                     </div>
                   </div>
-                )}
-
-                <div className="space-y-4 mb-6">
-                  <div className="bg-gray-800/50 p-4 rounded-lg">
-                    <div className="text-gray-400 text-sm mb-1">{t('angebot.duration') || 'Dauer'}</div>
-                    <div className="text-white text-lg font-semibold">
-                      {selectedOption ? selectedOption.duration_minutes : angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                ) : (
+                  /* No options available - show standard pricing */
+                  <div className="mb-8">
+                    <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-600">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-gray-400 text-sm mb-1">{t('angebot.duration') || 'Dauer'}</div>
+                          <div className="text-white text-xl font-semibold">
+                            {angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-gray-400 text-sm mb-1">{t('angebot.price') || 'Preis'}</div>
+                          <div className="text-rose-400 text-3xl font-bold">
+                            {angebot.price}€
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="bg-gray-800/50 p-4 rounded-lg">
-                    <div className="text-gray-400 text-sm mb-1">{t('angebot.price') || 'Preis'}</div>
-                    <div className="text-rose-400 text-2xl font-bold">
-                      {selectedOption ? selectedOption.price : angebot.price}€
+                )}
+
+                {/* Selected Option Summary */}
+                <div className="bg-gradient-to-r from-rose-900/20 to-purple-900/20 p-6 rounded-xl border border-rose-500/30 mb-8">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-gray-300 text-sm mb-1">{t('angebot.selected_duration') || 'Ausgewählte Dauer'}</div>
+                      <div className="text-white text-lg font-semibold">
+                        {selectedOption ? selectedOption.duration_minutes : angebot.duration_minutes} {t('angebot.minutes') || 'Minuten'}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-gray-300 text-sm mb-1">{t('angebot.total_price') || 'Gesamtpreis'}</div>
+                      <div className="text-rose-400 text-3xl font-bold">
+                        {selectedOption ? selectedOption.price : angebot.price}€
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <p className="text-gray-300 mb-6 text-sm">
-                  {t('angebot.book_description') || 'Buchen Sie jetzt Ihr unvergessliches Erlebnis. Diskret und professionell.'}
-                </p>
-                
+                {/* Booking Description */}
+                <div className="text-center mb-8">
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {t('angebot.book_description') || 'Buchen Sie jetzt Ihr unvergessliches Erlebnis. Diskret und professionell.'}
+                  </p>
+                </div>
+
+                {/* Book Now Button */}
                 <Link
                   to="/buchen"
-                  className="w-full bg-rose-600 text-white py-4 rounded-lg font-semibold hover:bg-rose-700 transition-colors text-center mb-4 flex items-center justify-center"
+                  className="w-full bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white py-4 px-8 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-rose-500/25 flex items-center justify-center group"
                 >
-                  <Heart className="w-5 h-5 mr-2" />
+                  <Heart className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform" />
                   {t('angebot.book_now') || 'Jetzt buchen'}
                 </Link>
-                
-                <p className="text-gray-400 text-xs text-center">
-                  {t('angebot.booking_note') || '100% diskret und sicher'}
-                </p>
+
+                {/* Trust Badge */}
+                <div className="mt-6 text-center">
+                  <p className="text-gray-400 text-xs flex items-center justify-center">
+                    <Check className="w-4 h-4 text-green-400 mr-2" />
+                    {t('angebot.booking_note') || '100% diskret und sicher'}
+                  </p>
+                </div>
 
                 <div className="mt-6 pt-6 border-t border-gray-700">
                   <div className="flex items-center justify-center text-gray-400 text-sm">

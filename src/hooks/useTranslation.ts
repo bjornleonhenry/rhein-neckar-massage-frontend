@@ -50,6 +50,8 @@ const defaultTranslations: Translations = {
   'angebot.duration': { de: 'Dauer', en: 'Duration' },
   'angebot.price': { de: 'Preis', en: 'Price' },
   'angebot.minutes': { de: 'Minuten', en: 'minutes' },
+  'angebot.selected_duration': { de: 'Ausgewählte Dauer', en: 'Selected duration' },
+  'angebot.total_price': { de: 'Gesamtpreis', en: 'Total price' },
   'angebot.book_description': { de: 'Buchen Sie jetzt Ihr unvergessliches Erlebnis. Diskret und professionell.', en: 'Book your unforgettable experience now. Discreet and professional.' },
   'angebot.book_now': { de: 'Jetzt buchen', en: 'Book now' },
   'angebot.booking_note': { de: '100% diskret und sicher', en: '100% discreet and secure' },

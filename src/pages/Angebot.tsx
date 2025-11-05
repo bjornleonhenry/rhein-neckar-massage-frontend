@@ -521,10 +521,10 @@ const Leistungen = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 1.0 + index * 0.1 }}
                         viewport={{ once: true }}
-                        className="mb-4 h-32 min-h-32 overflow-hidden"
+                        className="mb-4 h-32 min-h-32 overflow-hidden flex flex-col"
                       >
                         <h4 className="text-white font-semibold mb-2 text-sm">{t('angebot.form.services')}</h4>
-                        <div className="space-y-1">
+                        <div className="space-y-1 flex-1 overflow-hidden">
                           {Array.isArray(service.features) && service.features.map((feature, idx) => (
                             <motion.div
                               key={idx}
@@ -545,13 +545,13 @@ const Leistungen = () => {
                         </div>
                       </motion.div>
 
-                      <div className="h-20">
+                      <div className="h-20 min-h-20 flex flex-col">
                         <motion.div
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
                           transition={{ duration: 0.6, delay: 1.4 + index * 0.1 }}
                           viewport={{ once: true }}
-                          className="flex justify-between items-center pt-4 border-t border-gray-700 h-10 min-h-10"
+                          className="flex justify-between items-center pt-4 border-t border-gray-700 h-10 min-h-10 flex-shrink-0"
                         >
                           <motion.div
                             whileHover={{ scale: 1.1 }}

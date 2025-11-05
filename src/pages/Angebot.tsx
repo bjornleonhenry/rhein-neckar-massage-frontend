@@ -432,7 +432,7 @@ const Leistungen = () => {
                         scale: 1.01,
                         transition: { duration: 0.3 }
                       }}
-                      className={`bg-gray-900 border rounded-xl p-6 shadow-lg group relative flex flex-col h-full transform-gpu backface-hidden will-change-transform ${
+                      className={`bg-gray-900 border rounded-xl p-6 shadow-lg group relative flex flex-col h-full min-h-[360px] transform-gpu backface-hidden will-change-transform ${
                         service.popular
                           ? 'border-rose-600/50 hover:border-rose-500'
                           : 'border-rose-900/30 hover:border-rose-600/50'

@@ -81,8 +81,11 @@ function App() {
         if (!res.ok) throw new Error(`Failed settings fetch: ${res.status}`);
         const data = await res.json();
         if (!isMounted) return;
-  setMaintenanceEnabled(Boolean(data?.maintenance_mode));
-  setAgeConfirmationEnabled(Boolean(data?.age_confirmation));
+        // Debug instrumentation
+        console.log('[Settings] Raw response:', data);
+        console.log('[Settings] maintenance_mode typeof', typeof data?.maintenance_mode, 'value:', data?.maintenance_mode);
+        setMaintenanceEnabled(Boolean(data?.maintenance_mode));
+        setAgeConfirmationEnabled(Boolean(data?.age_confirmation));
       } catch (e) {
         // Fail-open: if settings endpoint is unavailable, do not block the app
         console.warn('Settings fetch failed, proceeding without maintenance flag.', e);

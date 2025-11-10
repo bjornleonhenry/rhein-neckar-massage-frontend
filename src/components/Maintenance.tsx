@@ -9,7 +9,7 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
   const { t } = useTranslation();
   const handleConfirm = () => {
     onConfirm();
-    localStorage.setItem('ageConfirmed', 'true');
+      window.location.href = 'https://rhein-neckar-massage.studio';
   };
 
     const handleReturn = () => {
@@ -73,16 +73,14 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
           <div style={{ margin: '0.5rem 0 2.2rem 0', display: 'flex', justifyContent: 'center' }}>
             <Floating intensity="low" duration={3}>
               <img
-                src="/assets/18plus.svg"
+                src="/assets/heart.svg"
                 alt="18+"
-                style={{ width: '200px', height: '200px' }}
+                style={{ width: '254px', height: '254px' }}
               />
             </Floating>
           </div>
-        <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{t('age.title')}</h1>
-        <p style={{ marginBottom: '0.2rem' }}>
-          {t('maintenance.description1')}
-        </p>
+        <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{t('maintenance.title')}</h1>
+
         <p style={{ marginBottom: '2.5rem' }}>
           {t('maintenance.description2')}
         </p>
@@ -91,8 +89,8 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
             style={{
               padding: '10px 30px',
               fontSize: '1.2rem',
-              background: '#374151',
-              color: '#fff',
+              background: '#FFF',
+              color: '#000',
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',

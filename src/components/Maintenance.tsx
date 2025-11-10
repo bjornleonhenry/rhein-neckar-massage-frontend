@@ -13,7 +13,7 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
   };
 
     const handleReturn = () => {
-      window.location.href = 'https://www.google.com';
+      window.location.href = 'https://www.google.de';
     };
 
   return (
@@ -82,7 +82,7 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
         <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{t('maintenance.title')}</h1>
 
         <p style={{ marginBottom: '2.5rem' }}>
-          {t('maintenance.description2')}
+          {t('maintenance.description')}
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
           <button

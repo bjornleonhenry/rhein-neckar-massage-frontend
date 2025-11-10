@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import AgeConfirmation from './components/AgeConfirmation';
+import Maintenance from './components/Maintenance';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -22,6 +23,7 @@ import Datenschutz from './pages/Datenschutz';
 import Impressum from './pages/Impressum';
 import AGB from './pages/AGB';
 import ScrollToTop from './lib/ScrollToTop';
+import { API } from './lib/useFetch';
 
 function AppContent() {
   const location = useLocation();
@@ -60,17 +62,59 @@ function AppContent() {
 
 function App() {
   const [ageConfirmed, setAgeConfirmed] = useState(false);
+  const [maintenanceEnabled, setMaintenanceEnabled] = useState<boolean>(false);
+  const [settingsLoaded, setSettingsLoaded] = useState<boolean>(false);
+  const [ageConfirmationEnabled, setAgeConfirmationEnabled] = useState<boolean>(false);
 
+  // Load persisted age confirmation
   useEffect(() => {
     const confirmed = localStorage.getItem('ageConfirmed') === 'true';
     setAgeConfirmed(confirmed);
+  }, []);
+
+  // Fetch public settings (maintenance toggle, etc.)
+  useEffect(() => {
+    let isMounted = true;
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch(`${API.base}/settings?t=${Date.now()}`);
+        if (!res.ok) throw new Error(`Failed settings fetch: ${res.status}`);
+        const data = await res.json();
+        if (!isMounted) return;
+  setMaintenanceEnabled(Boolean(data?.maintenance_mode));
+  setAgeConfirmationEnabled(Boolean(data?.age_confirmation));
+      } catch (e) {
+        // Fail-open: if settings endpoint is unavailable, do not block the app
+        console.warn('Settings fetch failed, proceeding without maintenance flag.', e);
+      } finally {
+        if (isMounted) setSettingsLoaded(true);
+      }
+    };
+    fetchSettings();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleConfirm = () => {
     setAgeConfirmed(true);
   };
 
-  if (!ageConfirmed) {
+  // Determine if current path is admin without relying on Router context
+  const isAdminPath = typeof window !== 'undefined' && window.location.pathname.startsWith('/admin');
+
+  // Wait for settings before deciding what to render to avoid flicker
+  if (!settingsLoaded) {
+    return null;
+  }
+
+  // Maintenance mode overrides everything for non-admin paths
+  if (maintenanceEnabled && !isAdminPath) {
+    return <Maintenance onConfirm={() => { /* no-op to satisfy component signature */ }} />;
+  }
+
+  // Age confirmation gate (only when not in admin paths)
+  if (!isAdminPath && ageConfirmationEnabled && !ageConfirmed) {
     return <AgeConfirmation onConfirm={handleConfirm} />;
   }
 

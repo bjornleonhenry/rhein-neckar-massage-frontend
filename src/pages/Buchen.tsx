@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Heart, ArrowLeft, Check } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Resend } from 'resend';
 
 interface Girl {
   name: string;
@@ -35,6 +36,7 @@ const Buchen = () => {
 
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [girls, setGirls] = useState<Girl[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
@@ -129,8 +131,10 @@ const Buchen = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
+      // Send to backend API
       const response = await fetch(`${import.meta.env.VITE_API_BASE}/bookings`, {
         method: 'POST',
         headers: {
@@ -142,14 +146,75 @@ const Buchen = () => {
 
       const result = await response.json();
 
-      if (response.ok) {
-        setIsSubmitted(true);
-      } else {
-        alert(t('buchen.error.submit') + ' ' + (result.message || t('buchen.error.retry')));
+      if (!response.ok) {
+        throw new Error(result.message || t('buchen.error.retry'));
       }
+
+      // Send email via Resend (frontend)
+      try {
+        const resend = new Resend('re_KRQhidF1_DdC7Rg5B6D2BGgexr4iqy1yz');
+        
+        const emailHtml = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">Neue Buchungsanfrage (Frontend)</h1>
+            
+            <div style="background: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px;">
+              <h2 style="color: #333; margin-top: 0;">Kundendaten:</h2>
+              <p><strong>Name:</strong> ${bookingData.name}</p>
+              <p><strong>E-Mail:</strong> ${bookingData.email}</p>
+              <p><strong>Telefon:</strong> ${bookingData.phone}</p>
+            </div>
+
+            <div style="background: #f0f9ff; padding: 20px; margin: 20px 0; border-radius: 8px;">
+              <h2 style="color: #333; margin-top: 0;">Buchungsdetails:</h2>
+              <p><strong>Masseurin:</strong> ${bookingData.girl || 'Nicht angegeben'}</p>
+              <p><strong>Service:</strong> ${bookingData.service}</p>
+              <p><strong>Datum:</strong> ${bookingData.date}</p>
+              <p><strong>Uhrzeit:</strong> ${bookingData.time}</p>
+              <p><strong>Dauer:</strong> ${bookingData.duration || 'Nicht angegeben'}</p>
+            </div>
+
+            ${bookingData.message ? `
+            <div style="background: #fff3cd; padding: 20px; margin: 20px 0; border-radius: 8px;">
+              <h2 style="color: #333; margin-top: 0;">Nachricht:</h2>
+              <p style="white-space: pre-wrap;">${bookingData.message}</p>
+            </div>
+            ` : ''}
+
+            ${bookingData.specialRequests ? `
+            <div style="background: #f8d7da; padding: 20px; margin: 20px 0; border-radius: 8px;">
+              <h2 style="color: #333; margin-top: 0;">Spezielle Wünsche:</h2>
+              <p style="white-space: pre-wrap;">${bookingData.specialRequests}</p>
+            </div>
+            ` : ''}
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+              <p style="color: #666; font-size: 12px;">
+                Diese E-Mail wurde automatisch vom Frontend gesendet.
+              </p>
+            </div>
+          </div>
+        `;
+
+        await resend.emails.send({
+          from: 'Buchungsanfrage <noreply@rhein-neckar-massage.de>',
+          to: ['Info@Rhein-Neckar-Massage.de'],
+          subject: 'Neue Buchungsanfrage - Rhein Neckar Massage (Frontend)',
+          html: emailHtml,
+        });
+
+        console.log('Frontend email sent successfully');
+      } catch (emailError) {
+        console.error('Frontend email failed:', emailError);
+        // Don't fail the whole submission if email fails
+      }
+
+      setIsSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(t('buchen.error.submit_full'));
+      alert(t('buchen.error.submit') + ' ' + (error instanceof Error ? error.message : t('buchen.error.retry')));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -462,11 +527,20 @@ const Buchen = () => {
                     </button>
                     <button
                       type="submit"
-                      disabled={!bookingData.name || !bookingData.phone}
+                      disabled={!bookingData.name || !bookingData.phone || isSubmitting}
                       className="bg-rose-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-rose-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center"
                     >
-                      <Heart className="w-5 h-5 mr-2" />
-                      {t('buchen.button.submit')}
+                      {isSubmitting ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                          {t('buchen.button.submitting')}
+                        </>
+                      ) : (
+                        <>
+                          <Heart className="w-5 h-5 mr-2" />
+                          {t('buchen.button.submit')}
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>

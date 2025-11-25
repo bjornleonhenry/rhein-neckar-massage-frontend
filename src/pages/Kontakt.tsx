@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { TextEffect } from '../components/ui/text-effect';
 import { ButtonHover } from '../components/ui/button-hover';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Resend } from 'resend';
 
 const Kontakt = () => {
   const { t, isLoading } = useTranslation();
@@ -56,24 +57,72 @@ const Kontakt = () => {
 
       const result = await response.json();
 
-      if (response.ok) {
-        setSubmitSuccess(true);
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          date: '',
-          time: '',
-          message: ''
-        });
-      } else {
-        setSubmitError(result.message || t('kontakt.form.error'));
+      if (!response.ok) {
+        throw new Error(result.message || t('kontakt.form.error'));
       }
+
+      // Send email via Resend (frontend)
+      try {
+        const resend = new Resend('re_KRQhidF1_DdC7Rg5B6D2BGgexr4iqy1yz');
+        
+        const emailHtml = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">Neue Kontaktanfrage (Frontend)</h1>
+            
+            <div style="background: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 8px;">
+              <h2 style="color: #333; margin-top: 0;">Kontaktdaten:</h2>
+              <p><strong>Name:</strong> ${formData.name}</p>
+              <p><strong>E-Mail:</strong> ${formData.email}</p>
+              <p><strong>Telefon:</strong> ${formData.phone || 'Nicht angegeben'}</p>
+            </div>
+
+            <div style="background: #f0f9ff; padding: 20px; margin: 20px 0; border-radius: 8px;">
+              <h2 style="color: #333; margin-top: 0;">Anfrage Details:</h2>
+              <p><strong>Service:</strong> ${formData.service || 'Nicht angegeben'}</p>
+              <p><strong>Gewünschtes Datum:</strong> ${formData.date || 'Nicht angegeben'}</p>
+              <p><strong>Gewünschte Uhrzeit:</strong> ${formData.time || 'Nicht angegeben'}</p>
+            </div>
+
+            <div style="background: #fff3cd; padding: 20px; margin: 20px 0; border-radius: 8px;">
+              <h2 style="color: #333; margin-top: 0;">Nachricht:</h2>
+              <p style="white-space: pre-wrap;">${formData.message}</p>
+            </div>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+              <p style="color: #666; font-size: 12px;">
+                Diese E-Mail wurde automatisch vom Frontend gesendet.
+              </p>
+            </div>
+          </div>
+        `;
+
+        await resend.emails.send({
+          from: 'Kontaktanfrage <noreply@rhein-neckar-massage.de>',
+          to: ['Info@Rhein-Neckar-Massage.de'],
+          subject: 'Neue Kontaktanfrage - Rhein Neckar Massage (Frontend)',
+          html: emailHtml,
+        });
+
+        console.log('Frontend email sent successfully');
+      } catch (emailError) {
+        console.error('Frontend email failed:', emailError);
+        // Don't fail the whole submission if email fails
+      }
+
+      setSubmitSuccess(true);
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        date: '',
+        time: '',
+        message: ''
+      });
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitError(t('kontakt.form.error'));
+      setSubmitError(error instanceof Error ? error.message : t('kontakt.form.error'));
     } finally {
       setIsSubmitting(false);
     }

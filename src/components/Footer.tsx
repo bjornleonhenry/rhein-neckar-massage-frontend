@@ -57,12 +57,15 @@ const Footer = () => {
                 className="flex space-x-4"
               >
                 {[
-                  { icon: <MapPin className="w-5 h-5" />, delay: 0.1 },
-                  { icon: <Phone className="w-5 h-5" />, delay: 0.2 },
-                  { icon: <Mail className="w-5 h-5" />, delay: 0.3 }
+                  { icon: <MapPin className="w-5 h-5" />, href: "https://maps.app.goo.gl/fcgQbxZEH1QZL23y8", target: "_blank", delay: 0.1 },
+                  { icon: <Phone className="w-5 h-5" />, href: "tel:+4962213581159", target: "_self", delay: 0.2 },
+                  { icon: <Mail className="w-5 h-5" />, href: "mailto:Info@Rhein-Neckar-Massage.de", target: "_self", delay: 0.3 }
                 ].map((item, index) => (
-                  <motion.div
+                  <motion.a
                     key={index}
+                    href={item.href}
+                    target={item.target}
+                    rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.5 + item.delay }}
@@ -73,10 +76,10 @@ const Footer = () => {
                       backgroundColor: "#dc2626"
                     }}
                     whileTap={{ scale: 0.9 }}
-                    className="bg-rose-600 p-2 rounded-full cursor-pointer transition-all duration-300"
+                    className="bg-rose-600 p-2 rounded-full cursor-pointer transition-all duration-300 inline-block"
                   >
                     {item.icon}
-                  </motion.div>
+                  </motion.a>
                 ))}
               </motion.div>
             </motion.div>

@@ -233,20 +233,33 @@ const Kontakt = () => {
                 className="text-2xl font-bold text-white mb-6"
               >
                 {t('kontakt.location.title')}
+
               </motion.h3>
+                  <div className="text-center">
+    <MapPin className="w-12 h-12 text-rose-400 mx-auto mb-4" />
+      <p className="text-gray-300">{t('kontakt.location.placeholder')}</p>
+                  <p className="text-gray-400 text-sm">{t('kontakt.location.address')}</p>
+                  </div>
               <motion.div
                 className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center"
               >
                 <div className="text-center">
                   <motion.div
                   >
-                    <MapPin className="w-12 h-12 text-rose-400 mx-auto mb-4" />
+              
+                                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2598.4182139994614!2d8.680027712556715!3d49.363159164932156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4797bf62f1cfffff%3A0x8193e0c4dbd93fc8!2sHatschekstra%C3%9Fe%2016a%2C%2069126%20Heidelberg%2C%20Germany!5e0!3m2!1sen!2sth!4v1764085397245!5m2!1sen!2sth" width="600" height="450" allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+
                   </motion.div>
-                  <p className="text-gray-300">{t('kontakt.location.placeholder')}</p>
-                  <p className="text-gray-400 text-sm">{t('kontakt.location.address')}</p>
+          
                 </div>
               </motion.div>
               <div className="mt-4 space-y-1">
+              
+
+                  
+            
+
+
                 <p className="text-gray-400 text-sm">• Diskrete Eingänge verfügbar</p>
                 <p className="text-gray-400 text-sm">• Parkplätze in der Nähe</p>
                 <p className="text-gray-400 text-sm">• Öffentliche Verkehrsmittel: 5 Min zu Fuß</p>

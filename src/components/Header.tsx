@@ -117,7 +117,7 @@ const Header = () => {
               className="flex items-center"
             >
               <Phone className="w-4 h-4 mr-2" />
-              <span>+49 151 00000000</span>
+              <span>{t('nav.phone')}</span>
             </motion.div>
           </motion.div>
         </div>
@@ -146,7 +146,9 @@ const Header = () => {
                   preset="fade"
                   per="word"
                 >
-                  Rhein<span className="text-rose-400"> Neckar </span>Massage 
+                 <div className="flex items-center">
+                  <span className="mr-1"><img src="/assets/heart.svg" alt="18+" style={{ width: 25, height: 25 }} /></span>
+                  Rhein<span className="text-rose-400"> Neckar </span>Massage </div>
                 </TextEffect>
               </Link>
             </motion.div>

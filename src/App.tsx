@@ -65,6 +65,8 @@ function App() {
   const [maintenanceEnabled, setMaintenanceEnabled] = useState<boolean>(false);
   const [settingsLoaded, setSettingsLoaded] = useState<boolean>(false);
   const [ageConfirmationEnabled, setAgeConfirmationEnabled] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [authChecked, setAuthChecked] = useState<boolean>(false);
 
   // Load persisted age confirmation
   useEffect(() => {
@@ -99,6 +101,36 @@ function App() {
     };
   }, []);
 
+  // Check authentication status when maintenance mode is enabled
+  useEffect(() => {
+    if (!maintenanceEnabled || authChecked) return;
+
+    let isMounted = true;
+    const checkAuth = async () => {
+      try {
+        const res = await fetch(`${API.base}/user`, {
+          credentials: 'include', // Include cookies for authentication
+        });
+        if (!isMounted) return;
+        if (res.ok) {
+          const userData = await res.json();
+          setIsAuthenticated(userData && Object.keys(userData).length > 0);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (e) {
+        console.warn('Auth check failed, assuming not authenticated.', e);
+        setIsAuthenticated(false);
+      } finally {
+        if (isMounted) setAuthChecked(true);
+      }
+    };
+    checkAuth();
+    return () => {
+      isMounted = false;
+    };
+  }, [maintenanceEnabled, authChecked]);
+
   const handleConfirm = () => {
     setAgeConfirmed(true);
   };
@@ -112,8 +144,21 @@ function App() {
   }
 
   // Maintenance mode overrides everything for non-admin paths
+  // Allow authenticated users to bypass maintenance mode
   if (maintenanceEnabled && !isAdminPath) {
-    return <Maintenance onConfirm={() => { /* no-op to satisfy component signature */ }} />;
+    // If we haven't checked auth yet, show loading or wait
+    if (isAuthenticated === null) {
+      return (
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="text-white">Loading...</div>
+        </div>
+      );
+    }
+    // If not authenticated, show maintenance mode
+    if (!isAuthenticated) {
+      return <Maintenance onConfirm={() => { /* no-op to satisfy component signature */ }} />;
+    }
+    // If authenticated, allow access (continue to normal app flow)
   }
 
   // Age confirmation gate (only when not in admin paths)

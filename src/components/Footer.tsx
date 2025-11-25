@@ -33,7 +33,10 @@ const Footer = () => {
                   preset="fade"
                   per="word"
                 >
-                  Rhein<span className="text-rose-400"> Neckar </span>Massage
+                      <div className="flex items-center">
+                  <span className="mr-1"><img src="/assets/heart.svg" alt="18+" style={{ width: 25, height: 25 }} /></span>
+                  
+                  Rhein<span className="text-rose-400"> Neckar </span>Massage</div>
                 </TextEffect>
               </motion.h3>
               <motion.p
@@ -171,9 +174,9 @@ const Footer = () => {
               <div className="space-y-3 text-gray-300">
                 {[
                   { icon: <MapPin className="w-4 h-4" />, text: t('footer.address'), delay: 0.1 },
-                  { icon: <Phone className="w-4 h-4" />, text: "+49 151 00000000", delay: 0.2 },
-                  { icon: <Mail className="w-4 h-4" />, text: "kontakt@rhein-neckar-massage.de", delay: 0.3 },
-                  { icon: <Clock className="w-4 h-4" />, text: currentLanguage === 'de' ? "Mo-Fr: 12:00-24:00" : "Mon-Fri: 12:00-24:00", delay: 0.4 }
+                  { icon: <Phone className="w-4 h-4" />, text: t('footer.phone'), delay: 0.2 },
+                  { icon: <Mail className="w-4 h-4" />, text: t('footer.email'), delay: 0.3 },
+                  { icon: <Clock className="w-4 h-4" />, text: t('footer.hours'), delay: 0.4 }
                 ].map((item, index) => (
                   <motion.div
                     key={index}

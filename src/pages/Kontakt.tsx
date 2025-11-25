@@ -230,12 +230,12 @@ const Kontakt = () => {
               className="bg-gray-900 border border-rose-900/30 rounded-xl p-8 shadow-lg hover:border-rose-400/50 transition-all duration-300"
             >
               <motion.h3
-                className="text-2xl font-bold text-white mb-6"
+                className="text-2xl font-bold text-white mb-8"
               >
                 {t('kontakt.location.title')}
 
               </motion.h3>
-                  <div className="text-center">
+                  <div className="text-center pb-8">
     <MapPin className="w-12 h-12 text-rose-400 mx-auto mb-4" />
       <p className="text-gray-300">{t('kontakt.location.placeholder')}</p>
                   <p className="text-gray-400 text-sm">{t('kontakt.location.address')}</p>
@@ -243,7 +243,7 @@ const Kontakt = () => {
               <motion.div
                 className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center"
               >
-                <div className="text-center">
+                <div className="text-center overflow-hidden rounded-lg bg-transparent border-2 border-rose-900/30 hover:border-rose-400/50 transition-all duration-300">
                   <motion.div
                   >
               

@@ -73,7 +73,7 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
           <div style={{ margin: '0.5rem 0 2.2rem 0', display: 'flex', justifyContent: 'center' }}>
             <Floating intensity="low" duration={3}>
               <img
-                src="/assets/heart.svg"
+                src="/assets/heart_red.svg"
                 alt="18+"
                 style={{ width: '254px', height: '254px' }}
               />

@@ -24,12 +24,10 @@ import Impressum from './pages/Impressum';
 import AGB from './pages/AGB';
 import ScrollToTop from './lib/ScrollToTop';
 import { API } from './lib/useFetch';
-import { useUmami } from './hooks/useUmami';
 
 function AppContent() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
-  useUmami();
 
   return (
     <>

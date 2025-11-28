@@ -18,6 +18,7 @@ import Jobs from './pages/Jobs';
 import Buchen from './pages/Buchen';
 import Admin from './pages/Admin';
 import Languages from './pages/Languages';
+import UmamiDashboard from './components/UmamiDashboard';
 import ProfileView from './pages/ProfileView';
 import Datenschutz from './pages/Datenschutz';
 import Impressum from './pages/Impressum';
@@ -55,6 +56,7 @@ function AppContent() {
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/agb" element={<AGB />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/analytics" element={<UmamiDashboard />} />
         </Routes>
       </main>
       {!isAdmin && <Footer />}

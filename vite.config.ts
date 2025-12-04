@@ -6,6 +6,14 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5555,
+    proxy: {
+      '/api': {
+        target: 'https://rhein-neckar-massage.de',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
   optimizeDeps: {
     exclude: ['lucide-react'],

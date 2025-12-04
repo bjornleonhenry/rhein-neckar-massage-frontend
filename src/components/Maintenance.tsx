@@ -108,6 +108,7 @@ const AgeConfirmation: React.FC<{ onConfirm: () => void }> = ({ onConfirm }) => 
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',
+              display: 'none',
             }}
             onClick={handleConfirm}
           >

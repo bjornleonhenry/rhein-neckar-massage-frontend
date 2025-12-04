@@ -325,7 +325,7 @@ const Buchen = () => {
                           <option value="">{t('buchen.select.placeholder')}</option>
                           {girls.filter(girl => girl.available).map((girl, idx) => (
                             <option key={idx} value={girl.name}>
-                              {girl.name} - {Array.isArray(girl.specialties) ? girl.specialties.join(', ') : (girl.specialties || 'Massage')}
+                              {girl.name}
                             </option>
                           ))}
                         </select>
@@ -345,7 +345,7 @@ const Buchen = () => {
                           <option value="">{t('buchen.select.placeholder')}</option>
                           {services.map((service, idx) => (
                             <option key={idx} value={service.name}>
-                              {service.name} - {service.duration} - {service.price}
+                              {service.name}
                             </option>
                           ))}
                         </select>
